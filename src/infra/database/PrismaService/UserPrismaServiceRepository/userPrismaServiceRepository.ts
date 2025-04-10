@@ -12,7 +12,7 @@ export class UserPrismaServiceRepository implements UserRepository {
       data: UserPrismaDto.CreateUserPrismaDto(user),
       include: { Telephone: true },
     });
-    return UserPrismaDto.PrismaToEntity(dataPrisma, dataPrisma.Telephone);
+    return UserPrismaDto.PrismaToEntity(dataPrisma);
   }
   async getUser(request: GetUserDto): Promise<UserEntity> {
     const data = await this.prisma.user.findFirst({
@@ -22,6 +22,6 @@ export class UserPrismaServiceRepository implements UserRepository {
       include: { Telephone: true },
     });
     if (!data) return undefined;
-    return UserPrismaDto.PrismaToEntity(data, data.Telephone);
+    return UserPrismaDto.PrismaToEntity(data);
   }
 }
