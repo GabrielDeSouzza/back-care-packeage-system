@@ -10,7 +10,6 @@ export class UserPrismaServiceRepository implements UserRepository {
   async createUser(user: UserEntity): Promise<UserEntity> {
     const dataPrisma = await this.prisma.user.create({
       data: UserPrismaDto.CreateUserPrismaDto(user),
-      include: { Telephone: true },
     });
     return UserPrismaDto.PrismaToEntity(dataPrisma);
   }
@@ -19,7 +18,6 @@ export class UserPrismaServiceRepository implements UserRepository {
       where: {
         OR: [{ id: request.id }, { email: request.email }],
       },
-      include: { Telephone: true },
     });
     if (!data) return undefined;
     return UserPrismaDto.PrismaToEntity(data);

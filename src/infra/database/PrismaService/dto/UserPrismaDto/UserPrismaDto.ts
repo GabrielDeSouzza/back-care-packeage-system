@@ -1,5 +1,5 @@
-import { Prisma, User as UserPrisma } from 'generated/prisma';
 import { UserEntity } from 'src/domain/Entities/User/UserEntity';
+import { Prisma, User as UserPrisma } from '../../generated/prisma';
 
 export class UserPrismaDto {
   public static PrismaToEntity(data: UserPrisma): UserEntity {

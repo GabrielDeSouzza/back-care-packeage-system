@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { UserModule } from './infra/Graphql/UserGraphql/UserModule';
 
-@Module({})
+@Module({
+  imports: [UserModule],
+})
 export class AppModule {}
