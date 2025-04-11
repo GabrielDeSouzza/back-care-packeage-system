@@ -13,9 +13,6 @@ import { UserRepository } from 'src/domain/Repositories/UserRepository';
 export class CreateUserUseCase {
   constructor(private userRepository: UserRepository) {}
   async execute(user: CreateUserDto) {
-    if (Object.keys(user).length === 0)
-      throw new BadRequestException('É NESSARIO ENVIAR OS DADOS DO USUARIO');
-
     user.email = user?.email?.toLowerCase();
     const emailInUse = await this.userRepository.getUser({
       email: user.email,

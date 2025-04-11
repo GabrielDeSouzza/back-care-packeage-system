@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  BadRequestException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { EncryptionUtils } from 'src/app/Utils/EncryptionUtils';
 import { LoginDataDto } from 'src/domain/Dtos/LoginData';
@@ -19,9 +15,6 @@ export class LoginUseCase implements LoginRepository {
   ) {}
 
   async Sign(SignRequest: SignValidationDto): Promise<LoginDataDto> {
-    if (!SignRequest || !SignRequest.email || !SignRequest.password) {
-      throw new BadRequestException('É Nessario enviar a Senha e Email');
-    }
     const user = await this.getUserUseCase.execute({
       email: SignRequest.email,
     });

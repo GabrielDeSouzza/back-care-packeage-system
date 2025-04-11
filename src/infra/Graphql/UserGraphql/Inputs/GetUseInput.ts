@@ -1,9 +1,10 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { ArgsType, Field, InputType } from '@nestjs/graphql';
 import { IsEmail, IsOptional, IsUUID } from 'class-validator';
 import { GetUserDto } from 'src/domain/Entities/User/Dto/GetUserDto';
 import { AtLeastOneField } from 'src/domain/utils/Decorators/AtLeastOneField';
 
-@AtLeastOneField<GetUserDto>(['email', 'id'], {
+@ArgsType()
+@AtLeastOneField<GetUserInput>(['email', 'id'], {
   message: 'Informe pelo menos um Email ou Id',
 })
 @InputType()

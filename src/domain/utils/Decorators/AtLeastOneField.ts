@@ -13,8 +13,9 @@ export class AtLeastOneFieldConstraint implements ValidatorConstraintInterface {
     args: ValidationArguments,
   ): boolean {
     const fields = args.constraints[0] as (keyof T)[];
+
     return fields.some((field) => {
-      const val = object[field];
+      const val = args.object[field.toString()];
       return val !== undefined && val !== null && val !== '';
     });
   }
