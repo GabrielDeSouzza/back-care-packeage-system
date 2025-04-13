@@ -5,20 +5,22 @@ import { CarePackageItemRepository } from 'src/domain/Repositories/CarePackageIt
 import { CarePackageItemEntity } from 'src/domain/Entities/CarePackageItem/CarePackageItemEntity';
 import { GetCarePackageItemDto } from 'src/domain/Entities/CarePackageItem/Dto/GetCarePackageItem';
 import { UpdateCarePackageItemDto } from 'src/domain/Entities/CarePackageItem/Dto/UpdateCarePackageItemDto';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class CarePackageItemPrismaServiceRepository
   implements CarePackageItemRepository
 {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
   async createCarePackageItem(data: CreateCarePackageItemDto) {
+    console.log('WSES', data);
     const carePackageItemData =
       CarePackageItemMapper.createCarePackageItemPrisma(data);
-
-    return CarePackageItemMapper.prismaToEntity(
-      await this.prisma.carePackageItem.create({
-        data: carePackageItemData,
-      }),
-    );
+    const dataPrisma = await this.prisma.carePackageItem.create({
+      data: carePackageItemData,
+    });
+    console.log('dataPrisma', dataPrisma);
+    return CarePackageItemMapper.prismaToEntity(dataPrisma);
   }
   async updateCarePackageItem(
     data: UpdateCarePackageItemDto,
@@ -40,6 +42,6 @@ export class CarePackageItemPrismaServiceRepository
         OR: [{ id: request.id }, { name: request.name }],
       },
     });
-    return CarePackageItemMapper.prismaToEntity(data);
+    return data ? CarePackageItemMapper.prismaToEntity(data) : undefined;
   }
 }

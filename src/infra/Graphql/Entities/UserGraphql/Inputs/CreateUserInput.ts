@@ -1,7 +1,10 @@
+import { UseGuards } from '@nestjs/common';
 import { Field, HideField, InputType } from '@nestjs/graphql';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { CreateUserDto } from 'src/domain/Entities/User/Dto/CreateUserDto';
+import { GraphQlAuthGuard } from 'src/infra/Graphql/Guard/GraphQlAuthGuard';
 
+@UseGuards(GraphQlAuthGuard)
 @InputType()
 export abstract class CreateUserInput implements CreateUserDto {
   @Field()

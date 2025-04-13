@@ -6,7 +6,7 @@ import { UserEntity } from 'src/domain/Entities/User/UserEntity';
 import { UserRepository } from 'src/domain/Repositories/UserRepository';
 import { GetUserUseCase } from '../../UserUseCase/GetUseUseCase';
 import { SignValidationDto } from '../Dto/SingInDto';
-import { LoginUseCase } from '../LoginUseCase';
+import { LoginUseCase } from '../SingInUseCase';
 
 describe('LoginUseCase', () => {
   let loginUseCase: LoginUseCase;
@@ -114,7 +114,7 @@ describe('LoginUseCase', () => {
         email: user.email,
         id: user.id,
       },
-      { secret: process.env.JWT_KEY, expiresIn: '1d' },
+      { secret: process.env.JWT_KEY, expiresIn: process.env.JWT_EXPIRES_IN },
     );
   });
 });

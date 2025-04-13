@@ -1,8 +1,9 @@
-import { NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { GetCarePackageDto } from 'src/domain/Entities/CarePackage/Dto/GetCarePackareDto';
 import { CarePackageItemEntity } from 'src/domain/Entities/CarePackageItem/CarePackageItemEntity';
 import { CarePackageItemRepository } from 'src/domain/Repositories/CarePackageItemRepository';
 
+@Injectable()
 export class GetCarePackageItemUseCase {
   constructor(private carePackageItemRepository: CarePackageItemRepository) {}
 

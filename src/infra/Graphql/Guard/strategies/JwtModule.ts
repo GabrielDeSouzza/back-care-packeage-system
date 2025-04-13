@@ -4,13 +4,14 @@ import { GetUserUseCase } from 'src/app/UseCases/UserUseCase/GetUseUseCase';
 import { UserRepository } from 'src/domain/Repositories/UserRepository';
 import { PrismaService } from 'src/infra/database/PrismaService/prismaService';
 import { UserPrismaServiceRepository } from 'src/infra/database/PrismaService/UserPrismaServiceRepository/userPrismaServiceRepository';
+import { JwtStrategy } from './JwtStrategy';
 
 @Module({
   imports: [
     JwtModule.register({
       global: true,
       secret: process.env.JWT_KEY,
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
     }),
   ],
   providers: [
@@ -20,6 +21,7 @@ import { UserPrismaServiceRepository } from 'src/infra/database/PrismaService/Us
     },
     PrismaService,
     GetUserUseCase,
+    JwtStrategy,
     JwtService,
   ],
   exports: [JwtService],

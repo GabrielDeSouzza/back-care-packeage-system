@@ -1,5 +1,5 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
-import { IsString, IsUUID } from 'class-validator';
+import { IsOptional, IsString, IsUUID } from 'class-validator';
 import { GetCarePackageItemDto } from 'src/domain/Entities/CarePackageItem/Dto/GetCarePackageItem';
 import { AtLeastOneField } from 'src/domain/utils/Decorators/AtLeastOneField';
 
@@ -10,9 +10,11 @@ import { AtLeastOneField } from 'src/domain/utils/Decorators/AtLeastOneField';
 export abstract class GetCarePackageItemInput implements GetCarePackageItemDto {
   @Field(() => ID, { nullable: true })
   @IsUUID('all', { message: 'Digite um ID válido' })
+  @IsOptional()
   id?: string;
 
   @Field({ nullable: true })
   @IsString()
+  @IsOptional()
   name?: string;
 }

@@ -4,6 +4,7 @@ import { UserRepository } from 'src/domain/Repositories/UserRepository';
 import { PrismaService } from 'src/infra/database/PrismaService/prismaService';
 import { UserPrismaServiceRepository } from 'src/infra/database/PrismaService/UserPrismaServiceRepository/userPrismaServiceRepository';
 import { UserResolver } from './UserResolver';
+import { CreateUserUseCase } from 'src/app/UseCases/UserUseCase/CreateUserUseCase';
 
 @Module({
   imports: [],
@@ -12,6 +13,7 @@ import { UserResolver } from './UserResolver';
     GetUserUseCase,
     PrismaService,
     UserResolver,
+    CreateUserUseCase,
   ],
 })
 export class UserModule {}

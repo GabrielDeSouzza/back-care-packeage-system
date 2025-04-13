@@ -7,7 +7,12 @@ import { CreateCarePackageItemUseCase } from 'src/app/UseCases/CarePackageItem/C
 import { GetCarePackageItemInput } from './Inputs/GetCarePackageItem';
 import { UpdateCarePackageItemUseCase } from 'src/app/UseCases/CarePackageItem/UpdateCarePackageItemUseCase';
 import { GetCarePackageItemUseCase } from 'src/app/UseCases/CarePackageItem/GetCarePackageItemUse';
+import { GetCurrentUser } from '../../Decorators/GetCurrentUserDecorator';
+import { UserEntity } from 'src/domain/Entities/User/UserEntity';
+import { UseGuards } from '@nestjs/common';
+import { GraphQlAuthGuard } from '../../Guard/GraphQlAuthGuard';
 
+@UseGuards(GraphQlAuthGuard)
 @Resolver(() => CarePackageItemModel)
 export class CarePackageItemResolver {
   constructor(
@@ -17,12 +22,17 @@ export class CarePackageItemResolver {
   ) {}
 
   @Query(() => CarePackageItemModel)
-  async getCarePackageItem(@Args() request: GetCarePackageItemInput) {
+  async getCarePackageItem(@Args('request') request: GetCarePackageItemInput) {
     return await this.getCarePackageItemUseCase.execute(request);
   }
 
   @Mutation(() => CarePackageItemModel)
-  async createCarePackageItem(@Args('data') data: CreateCarePackageItemInput) {
+  async createCarePackageItem(
+    @Args('data') data: CreateCarePackageItemInput,
+    @GetCurrentUser() user: UserEntity,
+  ) {
+    data.createdBy = user.id;
+    data.updatedBy = user.id;
     return await this.createCarePackageItemUseCase.execute(data);
   }
 
