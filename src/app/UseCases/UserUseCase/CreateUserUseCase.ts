@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  BadRequestException,
-  ConflictException,
-} from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { EncryptionUtils } from 'src/app/Utils/EncryptionUtils';
 import { CreateUserDto } from 'src/domain/Entities/User/Dto/CreateUserDto';

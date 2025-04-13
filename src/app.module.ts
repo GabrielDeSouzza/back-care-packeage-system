@@ -4,6 +4,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+import { CarePackageItemModule } from './infra/Graphql/CarePackageItemGraphql/CarePackageItemModule';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { join } from 'path';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     UserModule,
+    CarePackageItemModule,
   ],
 })
 export class AppModule {}

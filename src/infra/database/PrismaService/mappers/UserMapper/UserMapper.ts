@@ -1,8 +1,8 @@
 import { Prisma, User as UserPrisma } from '@prisma/client';
 import { UserEntity } from 'src/domain/Entities/User/UserEntity';
 
-export class UserPrismaDto {
-  public static PrismaToEntity(data: UserPrisma): UserEntity {
+export class UserMapper {
+  public static prismaToEntity(data: UserPrisma): UserEntity {
     const userEntity = new UserEntity({
       id: data.id,
       createdAt: data.createdAt,
@@ -13,7 +13,7 @@ export class UserPrismaDto {
     });
     return userEntity;
   }
-  public static CreateUserPrismaDto(data: UserEntity) {
+  public static createUserPrisma(data: UserEntity) {
     const prismaQuery: Prisma.UserCreateInput = {
       createdAt: new Date(),
       email: data.email,
