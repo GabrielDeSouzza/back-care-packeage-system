@@ -1,8 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { SingInResponseDto } from 'src/domain/Dtos/SingInResponse';
+import { SignInResponseDto } from 'src/domain/Dtos/SignInResponse';
 
 @ObjectType()
-export abstract class SingInResponseModel implements SingInResponseDto {
+export abstract class SingInResponseModel implements SignInResponseDto {
   @Field()
   token: string;
   @Field()

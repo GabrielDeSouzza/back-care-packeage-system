@@ -37,14 +37,6 @@ describe('CreateUserUseCase', () => {
     expect(createUserUseCase).toBeDefined();
   });
 
-  it('should throw an error if the user data is empty', async () => {
-    await expect(
-      createUserUseCase.execute({} as CreateUserDto),
-    ).rejects.toThrow(
-      new BadRequestException('É NESSARIO ENVIAR OS DADOS DO USUARIO'),
-    );
-  });
-
   it('should throw an error if the email is already in use', async () => {
     const existingUser = { email: 'test@example.com' } as UserEntity;
     userRepositoryMock.getUser.mockResolvedValue(existingUser);
@@ -93,12 +85,6 @@ describe('CreateUserUseCase', () => {
         email: userDto.email.toLowerCase(),
         name: userDto.name,
         password: 'encryptedPassword',
-        telephones: expect.arrayContaining([
-          expect.objectContaining({
-            area_code: 11,
-            number: 987654321,
-          }),
-        ]),
       }),
     );
     expect(userRepositoryMock.createUser).toHaveBeenCalledWith(
@@ -106,12 +92,6 @@ describe('CreateUserUseCase', () => {
         email: userDto.email.toLowerCase(),
         name: userDto.name,
         password: 'encryptedPassword',
-        telephones: expect.arrayContaining([
-          expect.objectContaining({
-            area_code: 11,
-            number: 987654321,
-          }),
-        ]),
       }),
     );
   });

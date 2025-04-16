@@ -1,4 +1,4 @@
-export abstract class SingInResponseDto {
+export abstract class SignInResponseDto {
   token: string;
   email: string;
   name: string;

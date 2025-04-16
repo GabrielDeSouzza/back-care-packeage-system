@@ -3,17 +3,17 @@ import { JwtService } from '@nestjs/jwt';
 import { GetUserUseCase } from 'src/app/UseCases/UserUseCase/GetUseUseCase';
 import { EncryptionUtils } from 'src/app/Utils/EncryptionUtils';
 import { PayloadTokenDto } from 'src/domain/Dtos/PayloadLoginDto';
-import { SignInDto } from 'src/domain/Dtos/SingInData';
-import { SingInResponseDto } from 'src/domain/Dtos/SingInResponse';
-import { SingInRepository } from 'src/domain/Repositories/SingInRepository';
+import { SignInDto } from 'src/domain/Dtos/SignInData';
+import { SignInResponseDto } from 'src/domain/Dtos/SignInResponse';
+import { SignInRepository } from 'src/domain/Repositories/SignInRepository';
 
 @Injectable()
-export class SingInUseCase implements SingInRepository {
+export class SignInUseCase implements SignInRepository {
   constructor(
     private getUserUseCase: GetUserUseCase,
     private jwtService: JwtService,
   ) {}
-  async signIn(signRequest: SignInDto): Promise<SingInResponseDto> {
+  async signIn(signRequest: SignInDto): Promise<SignInResponseDto> {
     const user = await this.getUserUseCase.execute({
       email: signRequest.email,
     });
