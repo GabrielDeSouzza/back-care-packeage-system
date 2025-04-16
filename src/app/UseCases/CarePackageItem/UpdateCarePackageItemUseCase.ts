@@ -14,7 +14,7 @@ export class UpdateCarePackageItemUseCase {
     const carePackageItemExist =
       await this.carePackageItemRepository.getCarePackageItem({ id: data.id });
     if (!carePackageItemExist)
-      throw new NotFoundException('Item Não encontrado');
+      throw new NotFoundException('Item não encontrado');
 
     if (data.name && carePackageItemExist.name !== data.name) {
       await this.isNameInUse(data.name);
@@ -28,9 +28,7 @@ export class UpdateCarePackageItemUseCase {
       name,
     });
     if (item) {
-      throw new ConflictException(
-        'O nome do Item já está em uso por outro Item',
-      );
+      throw new ConflictException(`O nome ${name} já esta em uso`);
     }
   }
 }
