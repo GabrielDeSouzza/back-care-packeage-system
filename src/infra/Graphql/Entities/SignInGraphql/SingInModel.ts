@@ -2,7 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { SignInResponseDto } from 'src/domain/Dtos/SignInResponse';
 
 @ObjectType()
-export abstract class SingInResponseModel implements SignInResponseDto {
+export abstract class SignInResponseModel implements SignInResponseDto {
   @Field()
   token: string;
   @Field()

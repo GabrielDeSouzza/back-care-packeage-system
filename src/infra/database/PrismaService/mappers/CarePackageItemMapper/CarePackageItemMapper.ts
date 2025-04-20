@@ -30,7 +30,7 @@ export class CarePackageItemMapper {
   }
   static updateCarePackageItemPrisma(data: UpdateCarePackageItemDto) {
     const updated: Prisma.CarePackageItemUpdateInput = {
-      name: data?.name,
+      name: data?.newName,
       updatedAt: new Date(),
       UpdatedBy: { connect: { id: data.updatedBy } },
     };

@@ -3,7 +3,7 @@ import { IsEmail, IsString } from 'class-validator';
 import { SignInDto } from 'src/domain/Dtos/SignInData';
 
 @ArgsType()
-export abstract class SingInInput implements SignInDto {
+export abstract class SignInInput implements SignInDto {
   @Field()
   @IsEmail({}, { message: 'Email inválido' })
   email: string;

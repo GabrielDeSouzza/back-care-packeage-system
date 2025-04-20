@@ -7,14 +7,13 @@ export abstract class UpdateCarePackageItemInput
   implements UpdateCarePackageItemDto
 {
   @Field(() => ID)
-  @IsUUID('all', { message: 'Digite um ID válido' })
-  @IsNotEmpty({ message: 'O ID é obrigatório para atualização' })
-  id: string;
+  @IsNotEmpty({ message: 'O nome é obrigatório para atualização' })
+  oldName: string;
 
   @Field({ nullable: true })
   @IsString()
-  @IsOptional()
-  name?: string;
+  @IsNotEmpty({ message: 'O novo nome é obrigatório para atualização' })
+  newName: string;
 
   @HideField()
   updatedBy: string;

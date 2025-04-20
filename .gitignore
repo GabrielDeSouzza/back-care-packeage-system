@@ -5,6 +5,8 @@
 /.pnpm-store
 /src/infra/database/PrismaService/generated/prisma
 
+/src/infra/Graphql/generated
+
 # Logs
 logs
 *.log

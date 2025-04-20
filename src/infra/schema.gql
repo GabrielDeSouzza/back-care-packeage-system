@@ -24,7 +24,7 @@ type CarePackageItemModel {
   updatedAt: DateTime!
 }
 
-type SingInResponseModel {
+type SignInResponseModel {
   token: String!
   email: String!
   name: String!
@@ -44,7 +44,7 @@ type Mutation {
   createUser(data: CreateUserInput!): UserModel!
   createCarePackageItem(data: CreateCarePackageItemInput!): CarePackageItemModel!
   updateCarePackageItem(data: UpdateCarePackageItemInput!): CarePackageItemModel!
-  singIn(email: String!, password: String!): SingInResponseModel!
+  signIn(email: String!, password: String!): SignInResponseModel!
 }
 
 input CreateUserInput {
@@ -58,6 +58,6 @@ input CreateCarePackageItemInput {
 }
 
 input UpdateCarePackageItemInput {
-  id: ID!
-  name: String
+  oldName: ID!
+  newName: String
 }

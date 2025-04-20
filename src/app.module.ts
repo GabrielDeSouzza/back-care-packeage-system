@@ -5,8 +5,8 @@ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { CarePackageItemModule } from './infra/Graphql/Entities/CarePackageItemGraphql/CarePackageItemModule';
-import { SingInModule } from './infra/Graphql/Entities/SignInGraphql/SingInModule';
 import { GuardModule } from './infra/Graphql/Guard/strategies/JwtModule';
+import { SignInModule } from './infra/Graphql/Entities/SignInGraphql/SingInModule';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { GuardModule } from './infra/Graphql/Guard/strategies/JwtModule';
     }),
     UserModule,
     CarePackageItemModule,
-    SingInModule,
+    SignInModule,
     GuardModule,
   ],
 })

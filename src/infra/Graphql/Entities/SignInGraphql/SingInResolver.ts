@@ -1,13 +1,15 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { SingInInput } from './SingInInput';
-import { SignInRepository } from 'src/domain/Repositories/SignInRepository';
-import { SingInResponseModel } from './SingInModel';
 
-@Resolver(() => SingInResponseModel)
-export class SingInResolver {
+import { SignInRepository } from 'src/domain/Repositories/SignInRepository';
+import { SignInResponseModel } from './SingInModel';
+import { SignInInput } from './SingInInput';
+
+
+@Resolver(() => SignInResponseModel)
+export class SignInResolver {
   constructor(private SignInRepository: SignInRepository) {}
-  @Mutation(() => SingInResponseModel)
-  async singIn(@Args() data: SingInInput) {
+  @Mutation(() => SignInResponseModel)
+  async signIn(@Args() data: SignInInput) {
     return this.SignInRepository.signIn(data);
   }
 }

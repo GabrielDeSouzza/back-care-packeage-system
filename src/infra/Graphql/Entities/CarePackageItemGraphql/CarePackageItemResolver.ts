@@ -9,7 +9,7 @@ import { UpdateCarePackageItemUseCase } from 'src/app/UseCases/CarePackageItem/U
 import { GetCarePackageItemUseCase } from 'src/app/UseCases/CarePackageItem/GetCarePackageItemUse';
 import { GetCurrentUser } from '../../Decorators/GetCurrentUserDecorator';
 import { UserEntity } from 'src/domain/Entities/User/UserEntity';
-import { UseGuards } from '@nestjs/common';
+import { Get, UseGuards } from '@nestjs/common';
 import { GraphQlAuthGuard } from '../../Guard/GraphQlAuthGuard';
 
 @UseGuards(GraphQlAuthGuard)
@@ -37,7 +37,11 @@ export class CarePackageItemResolver {
   }
 
   @Mutation(() => CarePackageItemModel)
-  async updateCarePackageItem(@Args('data') data: UpdateCarePackageItemInput) {
+  async updateCarePackageItem(
+    @Args('data') data: UpdateCarePackageItemInput,
+    @GetCurrentUser() user: UserEntity,
+  ) {
+    data.updatedBy = user.id;
     return await this.updateCarePackageItemUseCase.execute(data);
   }
 }

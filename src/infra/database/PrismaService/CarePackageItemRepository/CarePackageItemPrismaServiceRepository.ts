@@ -29,7 +29,7 @@ export class CarePackageItemPrismaServiceRepository
       CarePackageItemMapper.updateCarePackageItemPrisma(data);
     return CarePackageItemMapper.prismaToEntity(
       await this.prisma.carePackageItem.update({
-        where: { id: data.id },
+        where: { name: data.oldName },
         data: carePackageItemData,
       }),
     );

@@ -12,12 +12,14 @@ export class UpdateCarePackageItemUseCase {
 
   async execute(data: UpdateCarePackageItemDto) {
     const carePackageItemExist =
-      await this.carePackageItemRepository.getCarePackageItem({ id: data.id });
+      await this.carePackageItemRepository.getCarePackageItem({
+        name: data.oldName,
+      });
     if (!carePackageItemExist)
       throw new NotFoundException('Item não encontrado');
 
-    if (data.name && carePackageItemExist.name !== data.name) {
-      await this.isNameInUse(data.name);
+    if (data.newName && carePackageItemExist.name !== data.newName) {
+      await this.isNameInUse(data.newName);
     }
     const updatedItem =
       await this.carePackageItemRepository.updateCarePackageItem(data);

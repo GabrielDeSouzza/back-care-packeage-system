@@ -13,10 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator nestgraphql {
+  provider   = "prisma-nestjs-graphql"
+  output     = "../src/infra/Graphql/generated"
+  emitOnly = ["where.input"]
+}
+
 model User {
   id                       String            @id @default(uuid())
   name                     String            @db.VarChar(80)
   email                    String            @unique @db.VarChar(80)
+  /// @HideField({ input: true, output: true })
   password                 String
   createdAt                DateTime
   modified_at              DateTime          @default(now())
