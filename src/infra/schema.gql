@@ -32,7 +32,320 @@ type SignInResponseModel {
 
 type Query {
   getUser(email: String, id: String): UserModel!
+  countCarePackageItems(where: CarePackageItemWhereInput): Int!
+  getAllCarePackageItems(where: CarePackageItemWhereInput, sort: CarePackageItemOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [CarePackageItemModel!]!
   getCarePackageItem(request: GetCarePackageItemInput!): CarePackageItemModel!
+}
+
+input CarePackageItemWhereInput {
+  AND: [CarePackageItemWhereInput!]
+  OR: [CarePackageItemWhereInput!]
+  NOT: [CarePackageItemWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  createdBy: StringFilter
+  updatedBy: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  CreatedBy: UserScalarRelationFilter
+  UpdatedBy: UserScalarRelationFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input UserScalarRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  email: StringFilter
+  createdAt: DateTimeFilter
+  modified_at: DateTimeFilter
+  PersonCreatedBy: PersonListRelationFilter
+  PersonUpdatedBy: PersonListRelationFilter
+  ChildCreatedBy: ChildListRelationFilter
+  ChildUpdatedBy: ChildListRelationFilter
+  TypeCarePackageCreatedBy: TypeCarePackageListRelationFilter
+  TypeCarePackageUpdatedBy: TypeCarePackageListRelationFilter
+  CarePackageItemCreatedBy: CarePackageItemListRelationFilter
+  CarePackageItemUpdatedBy: CarePackageItemListRelationFilter
+  CarePackageCreatedBy: CarePackageListRelationFilter
+  CarePackageUpdatedBy: CarePackageListRelationFilter
+}
+
+input PersonListRelationFilter {
+  every: PersonWhereInput
+  some: PersonWhereInput
+  none: PersonWhereInput
+}
+
+input PersonWhereInput {
+  AND: [PersonWhereInput!]
+  OR: [PersonWhereInput!]
+  NOT: [PersonWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  lastName: StringFilter
+  document: IntFilter
+  hasChild: BoolFilter
+  dateBirth: DateTimeFilter
+  gender: StringFilter
+  createdBy: StringFilter
+  updatedBy: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  CreatedBy: UserScalarRelationFilter
+  UpdatedBy: UserScalarRelationFilter
+  Child: ChildListRelationFilter
+  CarePackage: CarePackageListRelationFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input NestedIntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input ChildListRelationFilter {
+  every: ChildWhereInput
+  some: ChildWhereInput
+  none: ChildWhereInput
+}
+
+input ChildWhereInput {
+  AND: [ChildWhereInput!]
+  OR: [ChildWhereInput!]
+  NOT: [ChildWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  lastName: StringFilter
+  dateBirh: DateTimeFilter
+  createdBy: StringFilter
+  updatedBy: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  responsibleId: StringFilter
+  PersonResponsible: PersonScalarRelationFilter
+  CreatedBy: UserScalarRelationFilter
+  UpdatedBy: UserScalarRelationFilter
+}
+
+input PersonScalarRelationFilter {
+  is: PersonWhereInput
+  isNot: PersonWhereInput
+}
+
+input CarePackageListRelationFilter {
+  every: CarePackageWhereInput
+  some: CarePackageWhereInput
+  none: CarePackageWhereInput
+}
+
+input CarePackageWhereInput {
+  AND: [CarePackageWhereInput!]
+  OR: [CarePackageWhereInput!]
+  NOT: [CarePackageWhereInput!]
+  id: StringFilter
+  numberControl: IntFilter
+  typeCarePackageId: StringFilter
+  personId: StringFilter
+  carePackageScheduleId: StringFilter
+  createdBy: StringFilter
+  updatedBy: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  TypeCarePackage: TypeCarePackageScalarRelationFilter
+  Person: PersonScalarRelationFilter
+  CarePackageSchedule: CarePackageScheduleScalarRelationFilter
+  CreatedBy: UserScalarRelationFilter
+  UpdatedBy: UserScalarRelationFilter
+}
+
+input TypeCarePackageScalarRelationFilter {
+  is: TypeCarePackageWhereInput
+  isNot: TypeCarePackageWhereInput
+}
+
+input TypeCarePackageWhereInput {
+  AND: [TypeCarePackageWhereInput!]
+  OR: [TypeCarePackageWhereInput!]
+  NOT: [TypeCarePackageWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  createdBy: StringFilter
+  updatedBy: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  CreatedBy: UserScalarRelationFilter
+  UpdatedBy: UserScalarRelationFilter
+  CarePackage: CarePackageListRelationFilter
+}
+
+input CarePackageScheduleScalarRelationFilter {
+  is: CarePackageScheduleWhereInput
+  isNot: CarePackageScheduleWhereInput
+}
+
+input CarePackageScheduleWhereInput {
+  AND: [CarePackageScheduleWhereInput!]
+  OR: [CarePackageScheduleWhereInput!]
+  NOT: [CarePackageScheduleWhereInput!]
+  id: StringFilter
+  deliveryDate: DateTimeFilter
+  carePackageCount: IntFilter
+  CarePackage: CarePackageListRelationFilter
+}
+
+input TypeCarePackageListRelationFilter {
+  every: TypeCarePackageWhereInput
+  some: TypeCarePackageWhereInput
+  none: TypeCarePackageWhereInput
+}
+
+input CarePackageItemListRelationFilter {
+  every: CarePackageItemWhereInput
+  some: CarePackageItemWhereInput
+  none: CarePackageItemWhereInput
+}
+
+input CarePackageItemOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  createdBy: SortOrder
+  updatedBy: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  CreatedBy: UserOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input UserOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  email: SortOrder
+  createdAt: SortOrder
+  modified_at: SortOrder
+  PersonCreatedBy: PersonOrderByRelationAggregateInput
+  PersonUpdatedBy: PersonOrderByRelationAggregateInput
+  ChildCreatedBy: ChildOrderByRelationAggregateInput
+  ChildUpdatedBy: ChildOrderByRelationAggregateInput
+  TypeCarePackageCreatedBy: TypeCarePackageOrderByRelationAggregateInput
+  TypeCarePackageUpdatedBy: TypeCarePackageOrderByRelationAggregateInput
+  CarePackageItemCreatedBy: CarePackageItemOrderByRelationAggregateInput
+  CarePackageItemUpdatedBy: CarePackageItemOrderByRelationAggregateInput
+  CarePackageCreatedBy: CarePackageOrderByRelationAggregateInput
+  CarePackageUpdatedBy: CarePackageOrderByRelationAggregateInput
+}
+
+input PersonOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ChildOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input TypeCarePackageOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input CarePackageItemOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input CarePackageOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input GetCarePackageItemInput {

@@ -13,6 +13,8 @@ describe('GetCarePackageItemUseCase', () => {
       getCarePackageItem: jest.fn(),
       createCarePackageItem: jest.fn(),
       updateCarePackageItem: jest.fn(),
+      countCarePackageItems: jest.fn(),
+      getAllCarePackageItems: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

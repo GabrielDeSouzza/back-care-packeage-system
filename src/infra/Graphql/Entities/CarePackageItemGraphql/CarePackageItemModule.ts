@@ -6,6 +6,8 @@ import { CarePackageItemRepository } from 'src/domain/Repositories/CarePackageIt
 import { CarePackageItemPrismaServiceRepository } from 'src/infra/database/PrismaService/CarePackageItemRepository/CarePackageItemPrismaServiceRepository';
 import { PrismaService } from 'src/infra/database/PrismaService/prismaService';
 import { CarePackageItemResolver } from './CarePackageItemResolver';
+import { CountCarePackageItemUseCase } from 'src/app/UseCases/CarePackageItem/CountCarePackageItemUseCase';
+import { GetAllCarePackageItemUseCase } from 'src/app/UseCases/CarePackageItem/GetAllCarePackageItemUseCase';
 
 @Module({
   providers: [
@@ -18,6 +20,8 @@ import { CarePackageItemResolver } from './CarePackageItemResolver';
     CreateCarePackageItemUseCase,
     UpdateCarePackageItemUseCase,
     CarePackageItemResolver,
+    CountCarePackageItemUseCase,
+    GetAllCarePackageItemUseCase,
   ],
 })
 export class CarePackageItemModule {}

@@ -34,7 +34,6 @@ export class SignInUseCase implements SignInRepository {
       secret: process.env.JWT_KEY,
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
-    console.log('token', token);
     return { token: token, email: user.email, name: user.name };
   }
 }

@@ -13,6 +13,8 @@ describe('UpdateCarePackageItemUseCase', () => {
       getCarePackageItem: jest.fn(),
       createCarePackageItem: jest.fn(),
       updateCarePackageItem: jest.fn(),
+      countCarePackageItems: jest.fn(),
+      getAllCarePackageItems: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -34,11 +36,11 @@ describe('UpdateCarePackageItemUseCase', () => {
   });
   it('should throw ConflictException if name already in use', async () => {
     const data: UpdateCarePackageItemDto = {
-      id: '1',
-      name: 'Existing Name',
+      newName: 'New Name',
+      oldName: 'Existing Name',
       updatedBy: 'userId',
     };
-    const existingItem = { id: '1', name: 'Old Name' };
+    const existingItem = { id: '1', name: 'Existing Name' };
     carePackageItemRepositoryMock.getCarePackageItem.mockResolvedValue(
       existingItem as CarePackageItemEntity,
     );
@@ -51,23 +53,23 @@ describe('UpdateCarePackageItemUseCase', () => {
       } as CarePackageItemEntity);
 
     await expect(updateCarePackageItemUseCase.execute(data)).rejects.toThrow(
-      new ConflictException(`O nome ${data.name} já esta em uso`),
+      new ConflictException(`O nome ${data.newName} já esta em uso`),
     );
   });
   it('should throw NotFoundException if item does not exist', async () => {
     carePackageItemRepositoryMock.getCarePackageItem.mockResolvedValue(null);
     await expect(
       updateCarePackageItemUseCase.execute({
-        id: 'invalidId',
-        name: 'New Name',
+        newName: 'New Name',
+        oldName: 'Existing Name',
         updatedBy: 'userId',
       } as UpdateCarePackageItemDto),
     ).rejects.toThrow(new NotFoundException('Item não encontrado'));
   });
   it('should successfully update a care package item', async () => {
     const data: UpdateCarePackageItemDto = {
-      id: '1',
-      name: 'New Name',
+      newName: 'New Name',
+      oldName: 'Old Name',
       updatedBy: 'userId',
     };
     const existingItem = { id: '1', name: 'Old Name' };

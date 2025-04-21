@@ -7,7 +7,6 @@ import { CreateCarePackageItemDto } from 'src/domain/Entities/CarePackageItem/Dt
 import { UpdateCarePackageItemDto } from 'src/domain/Entities/CarePackageItem/Dto/UpdateCarePackageItemDto';
 export class CarePackageItemMapper {
   static prismaToEntity(data: CarePackageItemPrisma) {
-    console.log('data', data);
     return new CarePackageItemEntity({
       createdAt: data.createdAt,
       createdBy: data.createdBy,
