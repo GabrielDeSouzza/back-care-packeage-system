@@ -7,6 +7,7 @@ import { join } from 'path';
 import { CarePackageItemModule } from './infra/Graphql/Entities/CarePackageItemGraphql/CarePackageItemModule';
 import { GuardModule } from './infra/Graphql/Guard/strategies/JwtModule';
 import { SignInModule } from './infra/Graphql/Entities/SignInGraphql/SingInModule';
+import { CarePackageScheduleModule } from './infra/Graphql/Entities/CarePackageScheduleGraphql/CarePackageScheduleModule';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SignInModule } from './infra/Graphql/Entities/SignInGraphql/SingInModul
     CarePackageItemModule,
     SignInModule,
     GuardModule,
+    CarePackageScheduleModule,
   ],
 })
 export class AppModule {}

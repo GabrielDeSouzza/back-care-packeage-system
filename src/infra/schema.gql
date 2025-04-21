@@ -30,11 +30,20 @@ type SignInResponseModel {
   name: String!
 }
 
+type CarePackageScheduleModel {
+  id: ID!
+  deliveryDate: DateTime!
+  carePackageCount: Float!
+}
+
 type Query {
   getUser(email: String, id: String): UserModel!
   countCarePackageItems(where: CarePackageItemWhereInput): Int!
   getAllCarePackageItems(where: CarePackageItemWhereInput, sort: CarePackageItemOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [CarePackageItemModel!]!
   getCarePackageItem(request: GetCarePackageItemInput!): CarePackageItemModel!
+  countCarePackageSchedules(where: CarePackageScheduleWhereInput): Int!
+  getAllCarePackageSchedules(where: CarePackageScheduleWhereInput, sort: CarePackageScheduleOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [CarePackageScheduleModel!]!
+  getCarePackageSchedule(request: GetCarePackageScheduleInput!): CarePackageScheduleModel!
 }
 
 input CarePackageItemWhereInput {
@@ -353,11 +362,25 @@ input GetCarePackageItemInput {
   name: String
 }
 
+input CarePackageScheduleOrderByWithRelationInput {
+  id: SortOrder
+  deliveryDate: SortOrder
+  carePackageCount: SortOrder
+  CarePackage: CarePackageOrderByRelationAggregateInput
+}
+
+input GetCarePackageScheduleInput {
+  id: ID
+  deliveryDate: DateTime
+}
+
 type Mutation {
   createUser(data: CreateUserInput!): UserModel!
   createCarePackageItem(data: CreateCarePackageItemInput!): CarePackageItemModel!
   updateCarePackageItem(data: UpdateCarePackageItemInput!): CarePackageItemModel!
   signIn(email: String!, password: String!): SignInResponseModel!
+  createCarePackageSchedule(data: CreateCarePackageScheduleInput!): CarePackageScheduleModel!
+  updateCarePackageSchedule(data: UpdateCarePackageScheduleInput!): CarePackageScheduleModel!
 }
 
 input CreateUserInput {
@@ -373,4 +396,15 @@ input CreateCarePackageItemInput {
 input UpdateCarePackageItemInput {
   oldName: ID!
   newName: String
+}
+
+input CreateCarePackageScheduleInput {
+  deliveryDate: DateTime!
+  carePackageCount: Float!
+}
+
+input UpdateCarePackageScheduleInput {
+  id: ID!
+  deliveryDate: DateTime
+  carePackageCount: Float
 }

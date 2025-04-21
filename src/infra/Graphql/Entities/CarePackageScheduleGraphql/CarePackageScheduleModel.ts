@@ -13,10 +13,4 @@ export class CarePackageScheduleModel
 
   @Field()
   carePackageCount: number;
-
-  @Field(() => Date)
-  createdAt: Date;
-
-  @Field(() => Date)
-  updatedAt: Date;
 }

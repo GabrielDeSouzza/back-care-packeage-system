@@ -14,6 +14,8 @@ describe('CreateCarePackageScheduleUseCase', () => {
       getCarePackageSchedule: jest.fn(),
       createCarePackageSchedule: jest.fn(),
       updateCarePackageSchedule: jest.fn(),
+      countCarePackageSchedules: jest.fn(),
+      getAllCarePackageSchedules: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({

@@ -16,7 +16,9 @@ export class CarePackageItemPrismaServiceRepository
   implements CarePackageItemRepository
 {
   constructor(private prisma: PrismaService) {}
-  countCarePackageItems(request: CountCarePackageItemDTO): Promise<number> {
+  async countCarePackageItems(
+    request: CountCarePackageItemDTO,
+  ): Promise<number> {
     return this.prisma.carePackageItem.count(request);
   }
   async getAllCarePackageItems(
