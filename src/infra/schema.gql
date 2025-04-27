@@ -58,6 +58,7 @@ input CarePackageItemWhereInput {
   updatedAt: DateTimeFilter
   CreatedBy: UserScalarRelationFilter
   UpdatedBy: UserScalarRelationFilter
+  TypeCarePackage: TypeCarePackageListRelationFilter
 }
 
 input StringFilter {
@@ -274,6 +275,13 @@ input TypeCarePackageWhereInput {
   CreatedBy: UserScalarRelationFilter
   UpdatedBy: UserScalarRelationFilter
   CarePackage: CarePackageListRelationFilter
+  CarePackageItem: CarePackageItemListRelationFilter
+}
+
+input CarePackageItemListRelationFilter {
+  every: CarePackageItemWhereInput
+  some: CarePackageItemWhereInput
+  none: CarePackageItemWhereInput
 }
 
 input CarePackageScheduleScalarRelationFilter {
@@ -297,12 +305,6 @@ input TypeCarePackageListRelationFilter {
   none: TypeCarePackageWhereInput
 }
 
-input CarePackageItemListRelationFilter {
-  every: CarePackageItemWhereInput
-  some: CarePackageItemWhereInput
-  none: CarePackageItemWhereInput
-}
-
 input CarePackageItemOrderByWithRelationInput {
   id: SortOrder
   name: SortOrder
@@ -312,6 +314,7 @@ input CarePackageItemOrderByWithRelationInput {
   updatedAt: SortOrder
   CreatedBy: UserOrderByWithRelationInput
   UpdatedBy: UserOrderByWithRelationInput
+  TypeCarePackage: TypeCarePackageOrderByRelationAggregateInput
 }
 
 enum SortOrder {
