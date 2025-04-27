@@ -5,6 +5,9 @@ export abstract class UpdateTypeCarePackageDto
     Partial<Omit<TypeCarePackageEntityProps, 'createdAt' | 'updatedAt'>>
 {
   id: string;
-  name?: string;
+  newName?: string;
+  oldName?: string;
+  itensName?: string[];
+  deletedItensName?: string[];
   updatedBy: string;
 }

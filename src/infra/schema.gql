@@ -36,6 +36,16 @@ type CarePackageScheduleModel {
   carePackageCount: Float!
 }
 
+type TypeCarePackageModel {
+  id: ID!
+  name: String!
+  createdBy: String!
+  updatedBy: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  itensName: [String!]!
+}
+
 type Query {
   getUser(email: String, id: String): UserModel!
   countCarePackageItems(where: CarePackageItemWhereInput): Int!
@@ -44,6 +54,9 @@ type Query {
   countCarePackageSchedules(where: CarePackageScheduleWhereInput): Int!
   getAllCarePackageSchedules(where: CarePackageScheduleWhereInput, sort: CarePackageScheduleOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [CarePackageScheduleModel!]!
   getCarePackageSchedule(request: GetCarePackageScheduleInput!): CarePackageScheduleModel!
+  countTypeCarePackages(where: TypeCarePackageWhereInput): Int!
+  getAllTypeCarePackages(where: TypeCarePackageWhereInput, sort: TypeCarePackageOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [TypeCarePackageModel!]!
+  getTypeCarePackage(request: GetTypeCarePackageInput!): TypeCarePackageModel!
 }
 
 input CarePackageItemWhereInput {
@@ -377,6 +390,24 @@ input GetCarePackageScheduleInput {
   deliveryDate: DateTime
 }
 
+input TypeCarePackageOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  createdBy: SortOrder
+  updatedBy: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  CreatedBy: UserOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  CarePackage: CarePackageOrderByRelationAggregateInput
+  CarePackageItem: CarePackageItemOrderByRelationAggregateInput
+}
+
+input GetTypeCarePackageInput {
+  id: ID
+  name: String
+}
+
 type Mutation {
   createUser(data: CreateUserInput!): UserModel!
   createCarePackageItem(data: CreateCarePackageItemInput!): CarePackageItemModel!
@@ -384,6 +415,8 @@ type Mutation {
   signIn(email: String!, password: String!): SignInResponseModel!
   createCarePackageSchedule(data: CreateCarePackageScheduleInput!): CarePackageScheduleModel!
   updateCarePackageSchedule(data: UpdateCarePackageScheduleInput!): CarePackageScheduleModel!
+  createTypeCarePackage(data: CreateTypeCarePackageInput!): TypeCarePackageModel!
+  updateTypeCarePackage(data: UpdateTypeCarePackageInput!): TypeCarePackageModel!
 }
 
 input CreateUserInput {
@@ -410,4 +443,16 @@ input UpdateCarePackageScheduleInput {
   oldDeliveryDate: DateTime
   newDeliveryDate: DateTime
   carePackageCount: Float
+}
+
+input CreateTypeCarePackageInput {
+  name: String!
+  itensName: [String!]!
+}
+
+input UpdateTypeCarePackageInput {
+  id: ID!
+  name: String
+  deletedItensName: [String!]
+  itensNames: [String!]
 }

@@ -5,5 +5,6 @@ export abstract class CreateTypeCarePackageDto
 {
   name: string;
   createdBy: string;
+  itensName: string[];
   updatedBy: string;
 }

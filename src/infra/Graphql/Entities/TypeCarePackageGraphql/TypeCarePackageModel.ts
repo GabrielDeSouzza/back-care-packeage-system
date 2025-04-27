@@ -20,4 +20,6 @@ export class TypeCarePackageModel implements TypeCarePackageEntityProps {
 
   @Field(() => Date)
   updatedAt: Date;
+  @Field(() => [String])
+  itensName: string[];
 }

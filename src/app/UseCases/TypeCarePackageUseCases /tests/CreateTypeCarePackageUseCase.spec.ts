@@ -20,6 +20,10 @@ describe('CreateTypeCarePackageUseCase', () => {
       getAllTypeCarePackages: jest.fn(),
     };
 
+    getAllcarePackageItemUseCaseMock = {
+      execute: jest.fn(),
+    } as unknown as jest.Mocked<GetAllCarePackageItemUseCase>;
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CreateTypeCarePackageUseCase,
@@ -57,7 +61,7 @@ describe('CreateTypeCarePackageUseCase', () => {
     } as CreateTypeCarePackageDto;
 
     await expect(createTypeCarePackageUseCase.execute(Dto)).rejects.toThrow(
-      new ConflictException(`A nome ${Dto.name} já esta em uso`),
+      new ConflictException(`O nome ${Dto.name} já está em uso`),
     );
   });
 
@@ -67,6 +71,11 @@ describe('CreateTypeCarePackageUseCase', () => {
       name: 'New Care Package',
     } as CreateTypeCarePackageDto;
 
+    getAllcarePackageItemUseCaseMock.execute.mockResolvedValue([
+      { name: 'Item 1' },
+      { name: 'Item 2' },
+    ] as any);
+    typeCarePackageRepositoryMock.getTypeCarePackage.mockResolvedValue(null);
     typeCarePackageRepositoryMock.createTypeCarePackage.mockResolvedValue(
       Dto as TypeCarePackageEntity,
     );
@@ -74,8 +83,8 @@ describe('CreateTypeCarePackageUseCase', () => {
     const result = await createTypeCarePackageUseCase.execute(Dto);
 
     expect(result).toEqual({
-      deliveryDate: new Date('2025-01-01'),
-      typeCarePackageCount: 0,
+      itensName: ['Item 1', 'Item 2'],
+      name: 'New Care Package',
     });
   });
 
@@ -91,23 +100,25 @@ describe('CreateTypeCarePackageUseCase', () => {
       new ConflictException(`Os itens ${Dto.itensName.join(', ')} não existem`),
     );
   });
-  /*it('should verify if item names exist', async () => {
+  it('should verify if item names exist', async () => {
     const Dto: CreateTypeCarePackageDto = {
       itensName: ['Item 1', 'Item 2'],
       name: 'New Care Package',
     } as CreateTypeCarePackageDto;
-    const mockItem: CarePackageItem = new CarePackageItemEntity({
-      name: 'Item 1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      id: '1', 
-      createdBy: '1',
-      updatedBy: '1',
-    }) as CarePackageItemEntity;
-    getAllcarePackageItemUseCaseMock.execute.mockResolvedValue([
-      mockItem
-     mockItem,
-    ]);
+
+    const mockItem = [
+      {
+        name: 'Item 1',
+      },
+      { name: 'Item 2' },
+    ] as any;
+
+    getAllcarePackageItemUseCaseMock.execute.mockResolvedValue(mockItem);
+
+    typeCarePackageRepositoryMock.getTypeCarePackage.mockResolvedValue(null); // Simular que o nome ainda não existe
+    typeCarePackageRepositoryMock.createTypeCarePackage.mockResolvedValue(
+      Dto as unknown as TypeCarePackageEntity,
+    );
 
     await createTypeCarePackageUseCase.execute(Dto);
 
@@ -120,5 +131,17 @@ describe('CreateTypeCarePackageUseCase', () => {
       limit: 1000,
       offset: 0,
     });
-  });*/
+  });
+  it('should throw an error if the item names do not exist', async () => {
+    const Dto: CreateTypeCarePackageDto = {
+      itensName: ['Item 1', 'Item 2'],
+      name: 'New Care Package',
+    } as CreateTypeCarePackageDto;
+
+    getAllcarePackageItemUseCaseMock.execute.mockResolvedValue([]);
+
+    await expect(createTypeCarePackageUseCase.execute(Dto)).rejects.toThrow(
+      new ConflictException(`Os itens ${Dto.itensName.join(', ')} não existem`),
+    );
+  });
 });

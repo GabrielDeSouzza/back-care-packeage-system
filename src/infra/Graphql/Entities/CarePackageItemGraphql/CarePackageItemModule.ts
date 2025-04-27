@@ -23,5 +23,10 @@ import { GetAllCarePackageItemUseCase } from 'src/app/UseCases/CarePackageItem/G
     CountCarePackageItemUseCase,
     GetAllCarePackageItemUseCase,
   ],
+  exports: [
+    CarePackageItemRepository,
+    GetCarePackageItemUseCase,
+    GetAllCarePackageItemUseCase,
+  ],
 })
 export class CarePackageItemModule {}

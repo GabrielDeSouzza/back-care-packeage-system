@@ -3,6 +3,7 @@ import { randomUUID } from 'crypto';
 export abstract class TypeCarePackageEntityProps {
   id?: string;
   name: string;
+  itensName: string[];
   createdBy: string;
   updatedBy: string;
   createdAt: Date;
@@ -41,6 +42,14 @@ export class TypeCarePackageEntity {
 
   public set createdBy(value: string) {
     this.props.createdBy = value;
+  }
+
+  public get itensName(): string[] {
+    return this.props.itensName;
+  }
+
+  public set itensName(value: string[]) {
+    this.props.itensName = value;
   }
 
   public get updatedBy(): string {
