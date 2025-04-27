@@ -9,8 +9,8 @@ export abstract class UpdateCarePackageScheduleDto
       >
     >
 {
-  id: string;
-  deliveryDate?: Date;
+  newDeliveryDate?: Date;
+  oldDeliveryDate?: Date;
   carePackageCount?: number;
   updatedBy: string;
 }

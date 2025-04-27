@@ -24,7 +24,7 @@ export class CarePackageScheduleMapper {
   }
   static updateCarePackageSchedulePrisma(data: UpdateCarePackageScheduleDto) {
     const updated: Prisma.CarePackageScheduleUpdateInput = {
-      deliveryDate: data?.deliveryDate,
+      deliveryDate: data?.newDeliveryDate,
       carePackageCount: data?.carePackageCount,
     };
     return updated;

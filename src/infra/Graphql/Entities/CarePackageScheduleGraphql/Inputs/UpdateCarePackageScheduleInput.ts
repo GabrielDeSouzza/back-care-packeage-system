@@ -1,19 +1,20 @@
 import { Field, HideField, ID, InputType } from '@nestjs/graphql';
-import { IsDateString, IsInt, IsOptional, IsUUID } from 'class-validator';
+import { IsDate, IsInt, IsOptional, IsUUID } from 'class-validator';
 import { UpdateCarePackageScheduleDto } from 'src/domain/Entities/CarePackageSchedule/Dto/UpdateCarePackageScheduleDto';
 
 @InputType()
 export abstract class UpdateCarePackageScheduleInput
   implements UpdateCarePackageScheduleDto
 {
-  @Field(() => ID)
-  @IsUUID('all', { message: 'ID inválido' })
-  id: string;
+  @Field({ nullable: true })
+  @IsDate({ message: 'Data de entrega inválida' })
+  @IsOptional()
+  oldDeliveryDate?: Date;
 
   @Field({ nullable: true })
-  @IsDateString({}, { message: 'Data de entrega inválida' })
+  @IsDate({ message: 'Data de entrega inválida' })
   @IsOptional()
-  deliveryDate?: Date;
+  newDeliveryDate?: Date;
 
   @Field({ nullable: true })
   @IsInt({ message: 'A quantidade de pacotes deve ser um número inteiro' })

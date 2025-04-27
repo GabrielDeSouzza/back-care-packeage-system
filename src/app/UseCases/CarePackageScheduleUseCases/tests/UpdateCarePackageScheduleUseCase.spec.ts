@@ -38,10 +38,10 @@ describe('UpdateCarePackageScheduleUseCase', () => {
   it('should throw ConflictException if date already in use', async () => {
     const deliveryDate = new Date('2025-01-01');
     const data: UpdateCarePackageScheduleDto = {
-      id: '1',
+      newDeliveryDate: deliveryDate,
+      oldDeliveryDate: new Date('2025-01-01'),
       updatedBy: 'userId',
       carePackageCount: 10,
-      deliveryDate,
     };
     const existingItem = { id: '1', deliveryDate: new Date('2025-01-05') };
     carePackageScheduleRepositoryMock.getCarePackageSchedule.mockResolvedValue(
@@ -58,7 +58,9 @@ describe('UpdateCarePackageScheduleUseCase', () => {
     await expect(
       updateCarePackageScheduleUseCase.execute(data),
     ).rejects.toThrow(
-      new ConflictException(`O data ${data.deliveryDate} já esta em uso`),
+      new ConflictException(
+        `O data ${data.newDeliveryDate.toLocaleDateString('pt-Br')} já esta em uso`,
+      ),
     );
   });
   it('should throw NotFoundException if item does not exist', async () => {
@@ -77,9 +79,9 @@ describe('UpdateCarePackageScheduleUseCase', () => {
   it('should successfully update a care package item', async () => {
     const deliveryDate = new Date();
     const data: UpdateCarePackageScheduleDto = {
-      id: '1',
       carePackageCount: 10,
-      deliveryDate,
+      newDeliveryDate: deliveryDate,
+      oldDeliveryDate: new Date('2025-01-01'),
       updatedBy: 'userId',
     };
     const existingItem = { id: '1', deliveryDate: new Date('2025-01-01') };

@@ -15,16 +15,16 @@ export class UpdateCarePackageScheduleUseCase {
   async execute(data: UpdateCarePackageScheduleDto) {
     const carePackageScheduleExist =
       await this.carePackageScheduleRepository.getCarePackageSchedule({
-        id: data.id,
+        deliveryDate: data.oldDeliveryDate,
       });
     if (!carePackageScheduleExist)
       throw new NotFoundException('Data não encontrada');
 
     if (
-      data.deliveryDate &&
-      carePackageScheduleExist.deliveryDate !== data.deliveryDate
+      data.newDeliveryDate &&
+      carePackageScheduleExist.deliveryDate !== data.oldDeliveryDate
     ) {
-      await this.isDateInUse(data.deliveryDate);
+      await this.isDateInUse(data.newDeliveryDate);
     }
     const updatedItem =
       await this.carePackageScheduleRepository.updateCarePackageSchedule(data);
@@ -36,7 +36,9 @@ export class UpdateCarePackageScheduleUseCase {
         deliveryDate,
       });
     if (item) {
-      throw new ConflictException(`O data ${deliveryDate} já esta em uso`);
+      throw new ConflictException(
+        `O data ${deliveryDate.toLocaleDateString('pt-Br')} já esta em uso`,
+      );
     }
   }
 }

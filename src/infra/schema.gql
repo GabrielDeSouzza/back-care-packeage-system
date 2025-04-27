@@ -404,7 +404,7 @@ input CreateCarePackageScheduleInput {
 }
 
 input UpdateCarePackageScheduleInput {
-  id: ID!
-  deliveryDate: DateTime
+  oldDeliveryDate: DateTime
+  newDeliveryDate: DateTime
   carePackageCount: Float
 }

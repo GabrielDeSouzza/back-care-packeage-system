@@ -50,6 +50,7 @@ export class CarePackageScheduleResolver {
     @Args('data') data: CreateCarePackageScheduleInput,
     @GetCurrentUser() user: UserEntity,
   ) {
+    console.log(data);
     data.createdBy = user.id;
     data.updatedBy = user.id;
     return await this.createCarePackageScheduleUseCase.execute(data);

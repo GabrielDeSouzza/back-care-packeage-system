@@ -46,7 +46,7 @@ export class CarePackageSchedulePrismaServiceRepository
       CarePackageScheduleMapper.updateCarePackageSchedulePrisma(data);
     return CarePackageScheduleMapper.prismaToEntity(
       await this.prisma.carePackageSchedule.update({
-        where: { id: data.id },
+        where: { deliveryDate: data.oldDeliveryDate },
         data: carePackageScheduleData,
       }),
     );
