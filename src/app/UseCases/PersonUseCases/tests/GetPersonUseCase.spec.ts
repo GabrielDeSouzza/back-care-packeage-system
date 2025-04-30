@@ -3,7 +3,6 @@ import { PersonRepository } from 'src/domain/Repositories/PersonRepository';
 import { GetPersonUseCase } from '../GetPersonUse';
 import { PersonEntity } from 'src/domain/Entities/Person/PersonEntity';
 import { NotFoundException } from '@nestjs/common';
-import { GetPersonDto } from 'src/domain/Entities/Person/Dto/GetPersonDto';
 
 describe('GetPersonUseCase', () => {
   let getPersonUseCase: GetPersonUseCase;
