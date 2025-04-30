@@ -7,7 +7,6 @@ import { CreateCarePackageScheduleDto } from 'src/domain/Entities/CarePackageSch
 import { UpdateCarePackageScheduleDto } from 'src/domain/Entities/CarePackageSchedule/Dto/UpdateCarePackageScheduleDto';
 export class CarePackageScheduleMapper {
   static prismaToEntity(data: CarePackageSchedulePrisma) {
-    console.log('data', data);
     return new CarePackageScheduleEntity({
       id: data.id,
       carePackageCount: data.carePackageCount,

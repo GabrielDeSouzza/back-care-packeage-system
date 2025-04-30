@@ -67,7 +67,7 @@ export class TypeCarePackagePrismaServiceRepository
     const typeCarePackageData =
       TypeCarePackageMapper.updateTypeCarePackagePrisma(data);
     const dataPrisma = await this.prisma.typeCarePackage.update({
-      where: { id: data.id },
+      where: { name: data.oldName },
       data: typeCarePackageData,
       include: {
         CarePackageItem: {

@@ -36,7 +36,6 @@ export class TypeCarePackageResolver {
   async getAllTypeCarePackages(
     @Args() request: GetAllCarePacakageInput,
   ): Promise<TypeCarePackageModel[]> {
-    console.log(request);
     return await this.getAllTypeCarePackageUseCase.execute(request);
   }
   @Query(() => TypeCarePackageModel)

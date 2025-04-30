@@ -32,13 +32,15 @@ export class TypeCarePackageMapper {
     return created;
   }
   static updateTypeCarePackagePrisma(data: UpdateTypeCarePackageDto) {
+    console.log('data', data);
+    console.log('itensName', data.itensName);
     const updated: Prisma.TypeCarePackageUpdateInput = {
       name: data?.newName,
       updatedAt: new Date(),
       UpdatedBy: { connect: { id: data.updatedBy } },
       CarePackageItem: {
-        connect: data.itensName.map((item) => ({ name: item })),
-        disconnect: data.deletedItensName.map((item) => ({ name: item })),
+        connect: data.itensName?.map((item) => ({ name: item })),
+        disconnect: data?.deletedItensName?.map((item) => ({ name: item })),
       },
     };
     return updated;

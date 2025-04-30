@@ -451,8 +451,9 @@ input CreateTypeCarePackageInput {
 }
 
 input UpdateTypeCarePackageInput {
-  id: ID!
-  name: String
+  id: String
+  newName: String
+  oldName: String
   deletedItensName: [String!]
-  itensNames: [String!]
+  itensName: [String!]
 }

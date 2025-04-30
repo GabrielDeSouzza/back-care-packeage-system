@@ -1,20 +1,25 @@
-import { Field, ID, InputType, HideField } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import { Field, InputType, HideField } from '@nestjs/graphql';
+import { IsOptional, IsString, IsUUID } from 'class-validator';
 import { UpdateTypeCarePackageDto } from 'src/domain/Entities/TypeCarePackage/Dto/UpdateTypeCarePackageDto';
 
 @InputType()
 export abstract class UpdateTypeCarePackageInput
   implements UpdateTypeCarePackageDto
 {
-  @Field(() => ID)
+  @Field({ nullable: true })
   @IsUUID('all', { message: 'ID inválido' })
-  @IsNotEmpty({ message: 'O ID é obrigatório' })
-  id: string;
+  @IsOptional()
+  id?: string;
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  name?: string;
+  newName?: string;
+
+  @Field({ nullable: true })
+  @IsString()
+  @IsOptional()
+  oldName?: string;
 
   @Field(() => [String], { nullable: true })
   @IsString({ each: true, message: 'Os itens devem ser strings' })
@@ -24,7 +29,7 @@ export abstract class UpdateTypeCarePackageInput
   @Field(() => [String], { nullable: true })
   @IsString({ each: true, message: 'Os itens devem ser strings' })
   @IsOptional()
-  itensNames?: string[];
+  itensName?: string[];
 
   @HideField()
   updatedBy: string;

@@ -4,7 +4,7 @@ export abstract class UpdateTypeCarePackageDto
   implements
     Partial<Omit<TypeCarePackageEntityProps, 'createdAt' | 'updatedAt'>>
 {
-  id: string;
+  id?: string;
   newName?: string;
   oldName?: string;
   itensName?: string[];

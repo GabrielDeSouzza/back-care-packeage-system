@@ -22,8 +22,8 @@ export class UpdateTypeCarePackageUseCase {
     if (!typeCarePackageExist)
       throw new NotFoundException('Tipo não encontrado');
 
-    if (data.newName && typeCarePackageExist.name !== data.oldName) {
-      await this.verifyNameInUse(data.newName);
+    if (data.newName && data.newName !== data.oldName) {
+      await this.verifyNewNameInUse(data.newName);
     }
 
     if (data.itensName) {
@@ -33,13 +33,15 @@ export class UpdateTypeCarePackageUseCase {
       await this.typeCarePackageRepository.updateTypeCarePackage(data);
     return updatedItem;
   }
-  private async verifyNameInUse(name: string) {
-    const itemNameInUse =
+  private async verifyNewNameInUse(newName: string) {
+    const existingWithNewName =
       await this.typeCarePackageRepository.getTypeCarePackage({
-        name: name,
+        name: newName,
       });
-    if (itemNameInUse)
-      throw new ConflictException(`O nome ${name} já esta em uso`);
+
+    if (existingWithNewName) {
+      throw new ConflictException(`O nome ${newName} já está em uso`);
+    }
   }
 
   private async verifyItensNameExist(names: string[]) {

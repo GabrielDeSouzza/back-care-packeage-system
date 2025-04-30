@@ -36,7 +36,6 @@ export class CarePackageItemResolver {
   async getAllCarePackageItems(
     @Args() request: GetAllCarePacakageItemInput,
   ): Promise<CarePackageItemModel[]> {
-    console.log(request);
     return await this.getAllCarePackageItemUseCase.execute(request);
   }
   @Query(() => CarePackageItemModel)
