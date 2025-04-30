@@ -7,7 +7,7 @@ export abstract class UpdateChildDto
   id: string;
   name?: string;
   lastName?: string;
-  dateBirh?: Date;
+  birthdayDate?: Date;
   responsibleId?: string;
   updatedBy: string;
 }

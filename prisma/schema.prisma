@@ -34,28 +34,28 @@ model User {
 }
 
 model Person {
-  id          String        @id @default(uuid())
-  name        String
-  lastName    String
-  document    Int           @unique
-  hasChild    Boolean
-  dateBirth   DateTime      @db.Date
-  gender      String
-  createdBy   String
-  updatedBy   String
-  createdAt   DateTime
-  updatedAt   DateTime
-  CreatedBy   User          @relation("CreatedBy", fields: [createdBy], references: [id])
-  UpdatedBy   User          @relation("UpdatedBy", fields: [updatedBy], references: [id])
-  Child       Child[]
-  CarePackage CarePackage[]
+  id           String        @id @default(uuid())
+  name         String
+  lastName     String
+  document     Int           @unique
+  hasChild     Boolean
+  birthdayDate DateTime      @db.Date
+  gender       String
+  createdBy    String
+  updatedBy    String
+  createdAt    DateTime
+  updatedAt    DateTime
+  CreatedBy    User          @relation("CreatedBy", fields: [createdBy], references: [id])
+  UpdatedBy    User          @relation("UpdatedBy", fields: [updatedBy], references: [id])
+  Child        Child[]
+  CarePackage  CarePackage[]
 }
 
 model Child {
   id                String   @id @default(uuid())
   name              String
   lastName          String
-  dateBirh          DateTime
+  birthdayDate      DateTime
   createdBy         String
   updatedBy         String
   createdAt         DateTime

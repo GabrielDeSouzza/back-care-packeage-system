@@ -27,7 +27,7 @@ export abstract class UpdateChildInput {
   @Field({ nullable: true })
   @IsDateString({}, { message: 'Data de nascimento inválida' })
   @IsOptional()
-  dateBirh?: Date;
+  birthdayDate?: Date;
 
   @Field({ nullable: true })
   @IsUUID('all', { message: 'ID do responsável inválido' })

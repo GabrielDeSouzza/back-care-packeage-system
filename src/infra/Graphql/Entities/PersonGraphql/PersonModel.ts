@@ -19,7 +19,7 @@ export class PersonModel implements PersonEntityProps {
   hasChild: boolean;
 
   @Field(() => Date)
-  dateBirth: Date;
+  birthdayDate: Date;
 
   @Field()
   gender: string;

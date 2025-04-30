@@ -6,7 +6,7 @@ export abstract class PersonEntityProps {
   lastName: string;
   document: number;
   hasChild: boolean;
-  dateBirth: Date;
+  birthdayDate: Date;
   gender: string;
   createdBy: string;
   updatedBy: string;
@@ -64,12 +64,12 @@ export class PersonEntity {
     this.props.hasChild = value;
   }
 
-  public get dateBirth(): Date {
-    return this.props.dateBirth;
+  public get birthdayDate(): Date {
+    return this.props.birthdayDate;
   }
 
-  public set dateBirth(value: Date) {
-    this.props.dateBirth = value;
+  public set birthdayDate(value: Date) {
+    this.props.birthdayDate = value;
   }
 
   public get gender(): string {

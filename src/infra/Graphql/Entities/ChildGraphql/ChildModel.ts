@@ -13,7 +13,7 @@ export class ChildModel implements ChildEntityProps {
   lastName: string;
 
   @Field(() => Date)
-  dateBirh: Date;
+  birthdayDate: Date;
 
   @Field(() => ID)
   responsibleId: string;

@@ -13,7 +13,7 @@ export abstract class CreateChildDto
   lastName: string;
 
   @IsDateString({}, { message: 'Data de nascimento inválida' })
-  dateBirh: Date;
+  birthdayDate: Date;
 
   @IsString()
   @IsNotEmpty({ message: 'O responsável é obrigatório' })

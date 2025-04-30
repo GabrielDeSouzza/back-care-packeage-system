@@ -4,7 +4,7 @@ export abstract class ChildEntityProps {
   id: string;
   name: string;
   lastName: string;
-  dateBirh: Date;
+  birthdayDate: Date;
   createdBy: string;
   updatedBy: string;
   createdAt: Date;
@@ -46,12 +46,12 @@ export class ChildEntity {
     this.props.lastName = value;
   }
 
-  public get dateBirh(): Date {
-    return this.props.dateBirh;
+  public get birthdayDate(): Date {
+    return this.props.birthdayDate;
   }
 
-  public set dateBirh(value: Date) {
-    this.props.dateBirh = value;
+  public set birthdayDate(value: Date) {
+    this.props.birthdayDate = value;
   }
 
   public get createdBy(): string {

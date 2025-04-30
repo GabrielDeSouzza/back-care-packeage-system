@@ -1,3 +1,4 @@
+import { CreateChildDto } from '../../Child/Dto/CreateChildDto';
 import { PersonEntityProps } from '../PersonEntity';
 
 export abstract class CreatePersonDto
@@ -7,8 +8,22 @@ export abstract class CreatePersonDto
   lastName: string;
   document: number;
   hasChild: boolean;
-  dateBirth: Date;
+  birthdayDate: Date;
   gender: string;
+  children?: CreateChildrenRelationPersonDto[];
   createdBy: string;
   updatedBy: string;
+}
+
+export abstract class CreateChildrenRelationPersonDto
+  implements
+    Omit<
+      CreateChildDto,
+      'responsibleId' | 'createdAt' | 'updatedAt' | 'updatedBy' | 'createdBy'
+    >
+{
+  gender: string;
+  name: string;
+  lastName: string;
+  birthdayDate: Date;
 }

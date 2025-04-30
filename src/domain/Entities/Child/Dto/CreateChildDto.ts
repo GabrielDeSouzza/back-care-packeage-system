@@ -5,7 +5,7 @@ export abstract class CreateChildDto
 {
   name: string;
   lastName: string;
-  dateBirh: Date;
+  birthdayDate: Date;
   responsibleId: string;
   createdBy: string;
   updatedBy: string;

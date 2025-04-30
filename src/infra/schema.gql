@@ -46,6 +46,20 @@ type TypeCarePackageModel {
   itensName: [String!]!
 }
 
+type PersonModel {
+  id: ID!
+  name: String!
+  lastName: String!
+  document: Float!
+  hasChild: Boolean!
+  birthdayDate: DateTime!
+  gender: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdBy: String!
+  updatedBy: String!
+}
+
 type Query {
   getUser(email: String, id: String): UserModel!
   countCarePackageItems(where: CarePackageItemWhereInput): Int!
@@ -57,6 +71,9 @@ type Query {
   countTypeCarePackages(where: TypeCarePackageWhereInput): Int!
   getAllTypeCarePackages(where: TypeCarePackageWhereInput, sort: TypeCarePackageOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [TypeCarePackageModel!]!
   getTypeCarePackage(request: GetTypeCarePackageInput!): TypeCarePackageModel!
+  countPersons(where: PersonWhereInput): Int!
+  getAllPersons(where: CarePackageItemWhereInput, sort: CarePackageItemOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [PersonModel!]!
+  getPerson(request: GetPersonInput!): PersonModel!
 }
 
 input CarePackageItemWhereInput {
@@ -171,7 +188,7 @@ input PersonWhereInput {
   lastName: StringFilter
   document: IntFilter
   hasChild: BoolFilter
-  dateBirth: DateTimeFilter
+  birthdayDate: DateTimeFilter
   gender: StringFilter
   createdBy: StringFilter
   updatedBy: StringFilter
@@ -228,7 +245,7 @@ input ChildWhereInput {
   id: StringFilter
   name: StringFilter
   lastName: StringFilter
-  dateBirh: DateTimeFilter
+  birthdayDate: DateTimeFilter
   createdBy: StringFilter
   updatedBy: StringFilter
   createdAt: DateTimeFilter
@@ -408,6 +425,11 @@ input GetTypeCarePackageInput {
   name: String
 }
 
+input GetPersonInput {
+  id: ID
+  document: Float
+}
+
 type Mutation {
   createUser(data: CreateUserInput!): UserModel!
   createCarePackageItem(data: CreateCarePackageItemInput!): CarePackageItemModel!
@@ -417,6 +439,8 @@ type Mutation {
   updateCarePackageSchedule(data: UpdateCarePackageScheduleInput!): CarePackageScheduleModel!
   createTypeCarePackage(data: CreateTypeCarePackageInput!): TypeCarePackageModel!
   updateTypeCarePackage(data: UpdateTypeCarePackageInput!): TypeCarePackageModel!
+  createPerson(data: CreatePersonInput!): PersonModel!
+  updatePerson(data: UpdatePersonInput!): PersonModel!
 }
 
 input CreateUserInput {
@@ -456,4 +480,42 @@ input UpdateTypeCarePackageInput {
   oldName: String
   deletedItensName: [String!]
   itensName: [String!]
+}
+
+input CreatePersonInput {
+  name: String!
+  lastName: String!
+  document: Float!
+  hasChild: Boolean!
+  birthdayDate: DateTime!
+  gender: String!
+  children: [CreateChildrenRelationPersonInput!]
+}
+
+input CreateChildrenRelationPersonInput {
+  gender: String!
+  name: String!
+  lastName: String!
+  birthdayDate: DateTime!
+}
+
+input UpdatePersonInput {
+  id: ID!
+  name: String
+  lastName: String
+  newDocument: Float
+  oldDocument: Float
+  hasChild: Boolean
+  birthdayDate: DateTime
+  gender: String
+  children: [UpdateChildrenRelationPersonInput!]
+  deletedChildrenIds: [String!]
+}
+
+input UpdateChildrenRelationPersonInput {
+  id: String!
+  gender: String
+  name: String
+  lastName: String
+  birthdayDate: DateTime
 }
