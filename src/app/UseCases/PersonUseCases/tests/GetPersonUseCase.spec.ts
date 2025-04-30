@@ -1,77 +1,66 @@
 import { TestingModule, Test } from '@nestjs/testing';
-import { CarePackageItemRepository } from 'src/domain/Repositories/CarePackageItemRepository';
-import { GetCarePackageItemUseCase } from '../GetPersonUse';
-import { CarePackageItemEntity } from 'src/domain/Entities/CarePackageItem/CarePackageItemEntity';
+import { PersonRepository } from 'src/domain/Repositories/PersonRepository';
+import { GetPersonUseCase } from '../GetPersonUse';
+import { PersonEntity } from 'src/domain/Entities/Person/PersonEntity';
 import { NotFoundException } from '@nestjs/common';
+import { GetPersonDto } from 'src/domain/Entities/Person/Dto/GetPersonDto';
 
-describe('GetCarePackageItemUseCase', () => {
-  let getCarePackageItemUseCase: GetCarePackageItemUseCase;
-  let carePackageItemRepositoryMock: jest.Mocked<CarePackageItemRepository>;
+describe('GetPersonUseCase', () => {
+  let getPersonUseCase: GetPersonUseCase;
+  let personRepositoryMock: jest.Mocked<PersonRepository>;
 
   beforeEach(async () => {
-    carePackageItemRepositoryMock = {
-      getCarePackageItem: jest.fn(),
-      createCarePackageItem: jest.fn(),
-      updateCarePackageItem: jest.fn(),
-      countCarePackageItems: jest.fn(),
-      getAllCarePackageItems: jest.fn(),
+    personRepositoryMock = {
+      getPerson: jest.fn(),
+      createPerson: jest.fn(),
+      updatePerson: jest.fn(),
+      countPersons: jest.fn(),
+      getAllPersons: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        GetCarePackageItemUseCase,
+        GetPersonUseCase,
         {
-          provide: CarePackageItemRepository,
-          useValue: carePackageItemRepositoryMock,
+          provide: PersonRepository,
+          useValue: personRepositoryMock,
         },
       ],
     }).compile();
 
-    getCarePackageItemUseCase = module.get<GetCarePackageItemUseCase>(
-      GetCarePackageItemUseCase,
-    );
+    getPersonUseCase = module.get<GetPersonUseCase>(GetPersonUseCase);
   });
 
   it('should be defined', () => {
-    expect(getCarePackageItemUseCase).toBeDefined();
+    expect(getPersonUseCase).toBeDefined();
   });
-  it('should return a care package item by ID', async () => {
-    const mockItem = { id: '1', name: 'item1' };
-    carePackageItemRepositoryMock.getCarePackageItem.mockResolvedValue(
-      mockItem as CarePackageItemEntity,
-    );
+  it('should return a person by ID', async () => {
+    const mockItem = { id: '1', document: 123456789 };
+    personRepositoryMock.getPerson.mockResolvedValue(mockItem as PersonEntity);
 
-    const result = await getCarePackageItemUseCase.execute({ id: '1' });
+    const result = await getPersonUseCase.execute({ id: '1' });
 
     expect(result).toEqual(mockItem);
-    expect(
-      carePackageItemRepositoryMock.getCarePackageItem,
-    ).toHaveBeenCalledWith({
+    expect(personRepositoryMock.getPerson).toHaveBeenCalledWith({
       id: '1',
     });
   });
-  it('should return a care package item by Name', async () => {
-    const mockItem = { id: '1', name: 'item1' };
-    carePackageItemRepositoryMock.getCarePackageItem.mockResolvedValue(
-      mockItem as CarePackageItemEntity,
-    );
+  it('should return a person by document', async () => {
+    const mockItem = { id: '1', document: 123456789 };
+    personRepositoryMock.getPerson.mockResolvedValue(mockItem as PersonEntity);
 
-    const result = await getCarePackageItemUseCase.execute({ name: 'item1' });
+    const result = await getPersonUseCase.execute({ document: 123456789 });
 
     expect(result).toEqual(mockItem);
-    expect(
-      carePackageItemRepositoryMock.getCarePackageItem,
-    ).toHaveBeenCalledWith({
-      name: 'item1',
+    expect(personRepositoryMock.getPerson).toHaveBeenCalledWith({
+      document: 123456789,
     });
   });
   it('should throw NotFoundException if item not found', async () => {
-    carePackageItemRepositoryMock.getCarePackageItem.mockResolvedValue(
-      undefined,
-    );
+    personRepositoryMock.getPerson.mockResolvedValue(undefined);
 
-    await expect(
-      getCarePackageItemUseCase.execute({ id: '1' }),
-    ).rejects.toThrow(new NotFoundException('Item não encontrado'));
+    await expect(getPersonUseCase.execute({ id: '1' })).rejects.toThrow(
+      new NotFoundException('Pessoa não encontrada'),
+    );
   });
 });

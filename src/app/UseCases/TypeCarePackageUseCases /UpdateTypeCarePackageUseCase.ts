@@ -40,7 +40,7 @@ export class UpdateTypeCarePackageUseCase {
       });
 
     if (existingWithNewName) {
-      throw new ConflictException(`O nome ${newName} já está em uso`);
+      throw new ConflictException(`O nome ${newName} já esta em uso`);
     }
   }
 

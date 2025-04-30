@@ -14,7 +14,7 @@ export class UpdatePersonUseCase {
     const personExist = await this.personRepository.getPerson({
       document: data.oldDocument,
     });
-    if (!personExist) throw new NotFoundException('documento não encontrado');
+    if (!personExist) throw new NotFoundException('Pessoa não encontrada');
 
     if (data.newDocument && personExist.document !== data.newDocument) {
       await this.isDocumentInUse(data.newDocument);

@@ -15,7 +15,7 @@ export class GetPersonUseCase {
 
   private ensureItemExists(item: PersonEntity | null): void {
     if (!item) {
-      throw new NotFoundException('Documento não encontrado');
+      throw new NotFoundException('Pessoa não encontrada');
     }
   }
 }

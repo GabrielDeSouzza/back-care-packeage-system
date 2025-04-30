@@ -1,74 +1,109 @@
 import { ConflictException } from '@nestjs/common';
 import { TestingModule, Test } from '@nestjs/testing';
-import { CarePackageItemEntity } from 'src/domain/Entities/CarePackageItem/CarePackageItemEntity';
-import { CreateCarePackageItemDto } from 'src/domain/Entities/CarePackageItem/Dto/CreateCarePackageItemDto';
-import { CarePackageItemRepository } from 'src/domain/Repositories/CarePackageItemRepository';
-import { CreateCarePackageItemUseCase } from '../CreatePersonUseCase';
+import { PersonEntity } from 'src/domain/Entities/Person/PersonEntity';
+import { CreatePersonDto } from 'src/domain/Entities/Person/Dto/CreatePersonDto';
+import { PersonRepository } from 'src/domain/Repositories/PersonRepository';
+import { CreatePersonUseCase } from '../CreatePersonUseCase';
 
-describe('CreateCarePackageItemUseCase', () => {
-  let createCarePackageItemUseCase: CreateCarePackageItemUseCase;
-  let carePackageItemRepositoryMock: jest.Mocked<CarePackageItemRepository>;
+describe('CreatePersonUseCase', () => {
+  let createPersonUseCase: CreatePersonUseCase;
+  let personRepositoryMock: jest.Mocked<PersonRepository>;
 
   beforeEach(async () => {
-    carePackageItemRepositoryMock = {
-      getCarePackageItem: jest.fn(),
-      createCarePackageItem: jest.fn(),
-      updateCarePackageItem: jest.fn(),
-      countCarePackageItems: jest.fn(),
-      getAllCarePackageItems: jest.fn(),
+    personRepositoryMock = {
+      getPerson: jest.fn(),
+      createPerson: jest.fn(),
+      updatePerson: jest.fn(),
+      countPersons: jest.fn(),
+      getAllPersons: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CreateCarePackageItemUseCase,
+        CreatePersonUseCase,
         {
-          provide: CarePackageItemRepository,
-          useValue: carePackageItemRepositoryMock,
+          provide: PersonRepository,
+          useValue: personRepositoryMock,
         },
       ],
     }).compile();
 
-    createCarePackageItemUseCase = module.get<CreateCarePackageItemUseCase>(
-      CreateCarePackageItemUseCase,
-    );
+    createPersonUseCase = module.get<CreatePersonUseCase>(CreatePersonUseCase);
   });
 
   it('should be defined', () => {
-    expect(createCarePackageItemUseCase).toBeDefined();
+    expect(createPersonUseCase).toBeDefined();
   });
 
   it('should throw an error if the name is already in use', async () => {
-    const existingItem = { name: 'item1' } as CarePackageItemEntity;
-    carePackageItemRepositoryMock.getCarePackageItem.mockResolvedValue(
-      existingItem,
-    );
+    const existingItem = { document: 123456789 } as PersonEntity;
+    personRepositoryMock.getPerson.mockResolvedValue(existingItem);
 
-    const itemDto: CreateCarePackageItemDto = {
-      name: 'item1',
+    const itemDto: CreatePersonDto = {
+      name: 'testName',
+      birthdayDate: new Date(),
+      document: 123456789,
+      gender: 'M',
+      hasChild: true,
+      lastName: 'lastName',
+      children: [
+        {
+          birthdayDate: new Date(),
+          name: 'childName',
+          gender: 'M',
+          lastName: 'childLastName',
+        },
+      ],
       createdBy: 'userId',
       updatedBy: 'userId',
     };
 
-    await expect(createCarePackageItemUseCase.execute(itemDto)).rejects.toThrow(
-      new ConflictException(`O nome ${itemDto.name} já esta em uso`),
+    await expect(createPersonUseCase.execute(itemDto)).rejects.toThrow(
+      new ConflictException(`O documento ${itemDto.document} já esta em uso`),
     );
   });
 
-  it('should successfully create a care package item', async () => {
-    const itemDto: CreateCarePackageItemDto = {
-      name: 'item2',
+  it('should successfully create a person', async () => {
+    const itemDto: CreatePersonDto = {
+      name: 'testName',
+      birthdayDate: new Date(),
+      document: 123456789,
+      gender: 'M',
+      hasChild: true,
+      lastName: 'lastName',
+      children: [
+        {
+          birthdayDate: new Date(),
+          name: 'childName',
+          gender: 'M',
+          lastName: 'childLastName',
+        },
+      ],
       createdBy: 'userId',
       updatedBy: 'userId',
     };
 
-    carePackageItemRepositoryMock.createCarePackageItem.mockResolvedValue(
-      itemDto as CarePackageItemEntity,
+    personRepositoryMock.createPerson.mockResolvedValue(
+      itemDto as PersonEntity,
     );
 
-    const result = await createCarePackageItemUseCase.execute(itemDto);
+    const result = await createPersonUseCase.execute(itemDto);
 
     expect(result).toEqual({
-      name: 'item2',
+      name: 'testName',
+      birthdayDate: new Date(),
+      document: 123456789,
+      gender: 'M',
+      hasChild: true,
+      lastName: 'lastName',
+      children: [
+        {
+          birthdayDate: new Date(),
+          name: 'childName',
+          gender: 'M',
+          lastName: 'childLastName',
+        },
+      ],
       createdBy: 'userId',
       updatedBy: 'userId',
     });

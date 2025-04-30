@@ -1,50 +1,44 @@
 import { TestingModule, Test } from '@nestjs/testing';
-import { CarePackageItemRepository } from 'src/domain/Repositories/CarePackageItemRepository';
-import { CountCarePackageItemUseCase } from '../CountPersonUseCase';
+import { PersonRepository } from 'src/domain/Repositories/PersonRepository';
+import { CountPersonUseCase } from '../CountPersonUseCase';
 
-describe('CountCarePackageItemUseCase', () => {
-  let countCarePackageItemUseCase: CountCarePackageItemUseCase;
-  let carePackageItemRepositoryMock: jest.Mocked<CarePackageItemRepository>;
+describe('CountPersonUseCase', () => {
+  let countPersonUseCase: CountPersonUseCase;
+  let personRepositoryMock: jest.Mocked<PersonRepository>;
 
   beforeEach(async () => {
-    carePackageItemRepositoryMock = {
-      getCarePackageItem: jest.fn(),
-      createCarePackageItem: jest.fn(),
-      updateCarePackageItem: jest.fn(),
-      countCarePackageItems: jest.fn(),
-      getAllCarePackageItems: jest.fn(),
+    personRepositoryMock = {
+      getPerson: jest.fn(),
+      createPerson: jest.fn(),
+      updatePerson: jest.fn(),
+      countPersons: jest.fn(),
+      getAllPersons: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CountCarePackageItemUseCase,
+        CountPersonUseCase,
         {
-          provide: CarePackageItemRepository,
-          useValue: carePackageItemRepositoryMock,
+          provide: PersonRepository,
+          useValue: personRepositoryMock,
         },
       ],
     }).compile();
 
-    countCarePackageItemUseCase = module.get<CountCarePackageItemUseCase>(
-      CountCarePackageItemUseCase,
-    );
+    countPersonUseCase = module.get<CountPersonUseCase>(CountPersonUseCase);
   });
 
   it('should be defined', () => {
-    expect(countCarePackageItemUseCase).toBeDefined();
+    expect(countPersonUseCase).toBeDefined();
   });
 
-  it('should count care package items', async () => {
+  it('should count persons', async () => {
     const mockCount = 5;
-    carePackageItemRepositoryMock.countCarePackageItems.mockResolvedValue(
-      mockCount,
-    );
+    personRepositoryMock.countPersons.mockResolvedValue(mockCount);
 
-    const result = await countCarePackageItemUseCase.execute({});
+    const result = await countPersonUseCase.execute({});
 
     expect(result).toEqual(mockCount);
-    expect(
-      carePackageItemRepositoryMock.countCarePackageItems,
-    ).toHaveBeenCalledWith({});
+    expect(personRepositoryMock.countPersons).toHaveBeenCalledWith({});
   });
 });

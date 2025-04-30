@@ -1,92 +1,90 @@
 import { TestingModule, Test } from '@nestjs/testing';
-import { CarePackageItemEntity } from 'src/domain/Entities/CarePackageItem/CarePackageItemEntity';
-import { UpdateCarePackageItemDto } from 'src/domain/Entities/CarePackageItem/Dto/UpdateCarePackageItemDto';
-import { CarePackageItemRepository } from 'src/domain/Repositories/CarePackageItemRepository';
-import { UpdateCarePackageItemUseCase } from '../UpdatePersonUseCase';
+import { PersonEntity } from 'src/domain/Entities/Person/PersonEntity';
+import { UpdatePersonDto } from 'src/domain/Entities/Person/Dto/UpdatePersonDto';
+import { PersonRepository } from 'src/domain/Repositories/PersonRepository';
+import { UpdatePersonUseCase } from '../UpdatePersonUseCase';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 
-describe('UpdateCarePackageItemUseCase', () => {
-  let updateCarePackageItemUseCase: UpdateCarePackageItemUseCase;
-  let carePackageItemRepositoryMock: jest.Mocked<CarePackageItemRepository>;
+describe('UpdatePersonUseCase', () => {
+  let updatePersonUseCase: UpdatePersonUseCase;
+  let personRepositoryMock: jest.Mocked<PersonRepository>;
   beforeEach(async () => {
-    carePackageItemRepositoryMock = {
-      getCarePackageItem: jest.fn(),
-      createCarePackageItem: jest.fn(),
-      updateCarePackageItem: jest.fn(),
-      countCarePackageItems: jest.fn(),
-      getAllCarePackageItems: jest.fn(),
+    personRepositoryMock = {
+      getPerson: jest.fn(),
+      createPerson: jest.fn(),
+      updatePerson: jest.fn(),
+      countPersons: jest.fn(),
+      getAllPersons: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        UpdateCarePackageItemUseCase,
+        UpdatePersonUseCase,
         {
-          provide: CarePackageItemRepository,
-          useValue: carePackageItemRepositoryMock,
+          provide: PersonRepository,
+          useValue: personRepositoryMock,
         },
       ],
     }).compile();
 
-    updateCarePackageItemUseCase = module.get<UpdateCarePackageItemUseCase>(
-      UpdateCarePackageItemUseCase,
-    );
+    updatePersonUseCase = module.get<UpdatePersonUseCase>(UpdatePersonUseCase);
   });
   it('should be defined', () => {
-    expect(updateCarePackageItemUseCase).toBeDefined();
+    expect(updatePersonUseCase).toBeDefined();
   });
-  it('should throw ConflictException if name already in use', async () => {
-    const data: UpdateCarePackageItemDto = {
-      newName: 'New Name',
-      oldName: 'Existing Name',
+  it('should throw ConflictException if document already in use', async () => {
+    const data: UpdatePersonDto = {
+      newDocument: 123456789,
+      oldDocument: 987654321,
       updatedBy: 'userId',
     };
-    const existingItem = { id: '1', name: 'Existing Name' };
-    carePackageItemRepositoryMock.getCarePackageItem.mockResolvedValue(
-      existingItem as CarePackageItemEntity,
+    const existingItem = { id: '1', document: 987654321 };
+    personRepositoryMock.getPerson.mockResolvedValue(
+      existingItem as PersonEntity,
     );
 
-    carePackageItemRepositoryMock.getCarePackageItem
-      .mockResolvedValueOnce(existingItem as CarePackageItemEntity)
+    personRepositoryMock.getPerson
+      .mockResolvedValueOnce(existingItem as PersonEntity)
       .mockResolvedValueOnce({
         id: '2',
-        name: 'Existing Name',
-      } as CarePackageItemEntity);
+        document: 123456789,
+      } as PersonEntity);
 
-    await expect(updateCarePackageItemUseCase.execute(data)).rejects.toThrow(
-      new ConflictException(`O nome ${data.newName} já esta em uso`),
+    await expect(updatePersonUseCase.execute(data)).rejects.toThrow(
+      new ConflictException(`O documento ${data.newDocument} já esta em uso`),
     );
   });
-  it('should throw NotFoundException if item does not exist', async () => {
-    carePackageItemRepositoryMock.getCarePackageItem.mockResolvedValue(null);
+  it('should throw NotFoundException if document does not exist', async () => {
+    personRepositoryMock.getPerson.mockResolvedValue(null);
     await expect(
-      updateCarePackageItemUseCase.execute({
-        newName: 'New Name',
-        oldName: 'Existing Name',
+      updatePersonUseCase.execute({
+        newDocument: 123456789,
+        oldDocument: 987654321,
         updatedBy: 'userId',
-      } as UpdateCarePackageItemDto),
-    ).rejects.toThrow(new NotFoundException('Item não encontrado'));
+      } as UpdatePersonDto),
+    ).rejects.toThrow(new NotFoundException('Pessoa não encontrada'));
   });
   it('should successfully update a care package item', async () => {
-    const data: UpdateCarePackageItemDto = {
-      newName: 'New Name',
-      oldName: 'Old Name',
+    const data: UpdatePersonDto = {
+      newDocument: 123456789,
+      oldDocument: 987654321,
       updatedBy: 'userId',
     };
-    const existingItem = { id: '1', name: 'Old Name' };
-    carePackageItemRepositoryMock.getCarePackageItem
-      .mockResolvedValueOnce(existingItem as CarePackageItemEntity)
+    const existingItem = { id: '1', document: 987654321 };
+    personRepositoryMock.getPerson
+      .mockResolvedValueOnce(existingItem as PersonEntity)
       .mockResolvedValueOnce(null);
-    carePackageItemRepositoryMock.updateCarePackageItem.mockResolvedValue({
+    personRepositoryMock.updatePerson.mockResolvedValue({
       id: '1',
-      name: 'New Name',
+      document: 123456789,
       updatedBy: 'userId',
-    } as CarePackageItemEntity);
-    const result = await updateCarePackageItemUseCase.execute(data);
+    } as PersonEntity);
+    const result = await updatePersonUseCase.execute(data);
 
     expect(result).toEqual({
       id: '1',
-      name: 'New Name',
+      document: 123456789,
       updatedBy: 'userId',
-    } as CarePackageItemEntity);
+    } as PersonEntity);
   });
 });
