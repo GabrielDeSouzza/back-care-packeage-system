@@ -46,6 +46,18 @@ type TypeCarePackageModel {
   itensName: [String!]!
 }
 
+type ChildModel {
+  id: ID!
+  name: String!
+  lastName: String!
+  birthdayDate: DateTime!
+  responsibleId: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdBy: String!
+  updatedBy: String!
+}
+
 type PersonModel {
   id: ID!
   name: String!
@@ -58,6 +70,8 @@ type PersonModel {
   updatedAt: DateTime!
   createdBy: String!
   updatedBy: String!
+  child: [ChildModel!]
+  Children: [ChildModel!]!
 }
 
 type Query {

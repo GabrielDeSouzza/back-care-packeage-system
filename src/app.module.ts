@@ -10,6 +10,7 @@ import { SignInModule } from './infra/Graphql/Entities/SignInGraphql/SingInModul
 import { CarePackageScheduleModule } from './infra/Graphql/Entities/CarePackageScheduleGraphql/CarePackageScheduleModule';
 import { TypeCarePackageModule } from './infra/Graphql/Entities/TypeCarePackageGraphql/TypeCarePackageModule';
 import { PersonModule } from './infra/Graphql/Entities/PersonGraphql/PersonModule';
+import { ChildModule } from './infra/Graphql/Entities/ChildGraphql/ChildModule';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { PersonModule } from './infra/Graphql/Entities/PersonGraphql/PersonModul
     CarePackageScheduleModule,
     TypeCarePackageModule,
     PersonModule,
+    ChildModule,
   ],
 })
 export class AppModule {}

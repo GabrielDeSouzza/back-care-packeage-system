@@ -1,4 +1,11 @@
-import { Args, Int, Mutation, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { PersonModel } from './PersonModel';
 import { Query } from '@nestjs/graphql';
 import { CreatePersonInput } from './Inputs/CreatePersonInput';
@@ -15,6 +22,8 @@ import { UpdatePersonUseCase } from 'src/app/UseCases/PersonUseCases/UpdatePerso
 import { GetAllCarePacakageItemInput } from '../CarePackageItemGraphql/Inputs/GetAllCarePackageItemInput';
 import { GetPersonInput } from './Inputs/GetPersonInput';
 import { CountPersonInput } from './Inputs/CountPersonInput';
+import { GetAllChildUseCase } from 'src/app/UseCases/ChildUseCase/GetAllChildrenUseCase';
+import { ChildModel } from '../ChildGraphql/ChildModel';
 
 @UseGuards(GraphQlAuthGuard)
 @Resolver(() => PersonModel)
@@ -25,6 +34,7 @@ export class PersonResolver {
     private readonly getPersonUseCase: GetPersonUseCase,
     private readonly countPersonUseCase: CountPersonUseCase,
     private readonly getAllPersonUseCase: GetAllPersonUseCase,
+    private readonly getAllChidrenUseCase: GetAllChildUseCase,
   ) {}
   @Query(() => Int)
   async countPersons(@Args() request: CountPersonInput): Promise<number> {
@@ -58,5 +68,18 @@ export class PersonResolver {
   ) {
     data.updatedBy = user.id;
     return await this.updatePersonUseCase.execute(data);
+  }
+
+  @ResolveField(() => [ChildModel])
+  async Children(@Parent() person: PersonModel) {
+    return await this.getAllChidrenUseCase.execute({
+      limit: 10000,
+      offset: 0,
+      where: {
+        responsibleId: {
+          equals: person.id,
+        },
+      },
+    });
   }
 }

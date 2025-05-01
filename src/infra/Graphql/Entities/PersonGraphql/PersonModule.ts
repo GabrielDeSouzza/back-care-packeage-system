@@ -8,8 +8,10 @@ import { GetPersonUseCase } from 'src/app/UseCases/PersonUseCases/GetPersonUse';
 import { UpdatePersonUseCase } from 'src/app/UseCases/PersonUseCases/UpdatePersonUseCase';
 import { CountPersonUseCase } from 'src/app/UseCases/PersonUseCases/CountPersonUseCase';
 import { GetAllPersonUseCase } from 'src/app/UseCases/PersonUseCases/GetAllPersonUseCase';
+import { ChildModule } from '../ChildGraphql/ChildModule';
 
 @Module({
+  imports: [ChildModule],
   providers: [
     {
       provide: PersonRepository,

@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { PersonEntityProps } from 'src/domain/Entities/Person/PersonEntity';
+import { ChildModel } from '../ChildGraphql/ChildModel';
 
 @ObjectType()
 export class PersonModel implements PersonEntityProps {
@@ -35,4 +36,7 @@ export class PersonModel implements PersonEntityProps {
 
   @Field()
   updatedBy: string;
+
+  @Field(() => [ChildModel], { nullable: true })
+  child?: [ChildModel] | null;
 }
