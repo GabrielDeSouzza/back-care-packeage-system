@@ -1,3 +1,4 @@
+import { Field } from '@nestjs/graphql';
 import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 import { ChildEntityProps } from 'src/domain/Entities/Child/ChildEntity';
 
@@ -7,6 +8,9 @@ export abstract class CreateChildDto
   @IsString()
   @IsNotEmpty({ message: 'O nome é obrigatório' })
   name: string;
+  @Field()
+  @IsString()
+  gender: string;
 
   @IsString()
   @IsNotEmpty({ message: 'O sobrenome é obrigatório' })

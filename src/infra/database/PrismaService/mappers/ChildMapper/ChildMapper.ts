@@ -12,6 +12,7 @@ export class ChildMapper {
       updatedAt: data.updatedAt,
       updatedBy: data.updatedBy,
       birthdayDate: data.birthdayDate,
+      gender: data.gender,
       lastName: data.lastName,
       responsibleId: data.responsibleId,
     });
@@ -21,6 +22,7 @@ export class ChildMapper {
       createdAt: new Date(),
       CreatedBy: { connect: { id: data.createdBy } },
       name: data.name,
+      gender: data.gender,
       updatedAt: new Date(),
       UpdatedBy: { connect: { id: data.updatedBy } },
       id: crypto.randomUUID(),
@@ -36,6 +38,7 @@ export class ChildMapper {
     const updated: Prisma.ChildUpdateInput = {
       name: data?.name,
       updatedAt: new Date(),
+      gender: data?.gender,
       UpdatedBy: { connect: { id: data.updatedBy } },
       birthdayDate: data?.birthdayDate,
       lastName: data?.lastName,

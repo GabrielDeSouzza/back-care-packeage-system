@@ -5,6 +5,7 @@ import {
   IsString,
   IsUUID,
   IsNotEmpty,
+  IsDate,
 } from 'class-validator';
 
 @InputType()
@@ -13,6 +14,11 @@ export abstract class UpdateChildInput {
   @IsUUID('all', { message: 'ID inválido' })
   @IsNotEmpty({ message: 'É necessário fornecer o ID para atualizar' })
   id: string;
+
+  @Field()
+  @IsString()
+  @IsOptional()
+  gender?: string;
 
   @Field({ nullable: true })
   @IsString()
@@ -25,7 +31,7 @@ export abstract class UpdateChildInput {
   lastName?: string;
 
   @Field({ nullable: true })
-  @IsDateString({}, { message: 'Data de nascimento inválida' })
+  @IsDate({ message: 'Data de nascimento inválida' })
   @IsOptional()
   birthdayDate?: Date;
 

@@ -6,6 +6,7 @@ export abstract class CreateChildDto
   name: string;
   lastName: string;
   birthdayDate: Date;
+  gender: string;
   responsibleId: string;
   createdBy: string;
   updatedBy: string;

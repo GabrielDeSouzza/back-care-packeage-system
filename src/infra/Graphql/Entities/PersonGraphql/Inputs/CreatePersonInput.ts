@@ -1,12 +1,5 @@
 import { Field, InputType, HideField } from '@nestjs/graphql';
-import {
-  IsBoolean,
-  IsDate,
-  IsDateString,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsDate, IsNotEmpty, IsString } from 'class-validator';
 import {
   CreateChildrenRelationPersonDto,
   CreatePersonDto,
@@ -16,7 +9,7 @@ import { CreateChildrenRelationPersonInput } from './ChildrenRelationPersonInput
 @InputType()
 export abstract class CreatePersonInput implements CreatePersonDto {
   @Field()
-  @IsString()
+  @IsString({ message: 'O nome deve ter pelo menos 3 Caracteres' })
   @IsNotEmpty({ message: 'O nome é obrigatório' })
   name: string;
 
@@ -26,8 +19,8 @@ export abstract class CreatePersonInput implements CreatePersonDto {
   lastName: string;
 
   @Field()
-  @IsNumber()
-  document: number;
+  @IsString()
+  document: string;
 
   @Field()
   @IsBoolean()

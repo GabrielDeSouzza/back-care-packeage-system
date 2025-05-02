@@ -6,7 +6,7 @@ export abstract class CreatePersonDto
 {
   name: string;
   lastName: string;
-  document: number;
+  document: string;
   hasChild: boolean;
   birthdayDate: Date;
   gender: string;

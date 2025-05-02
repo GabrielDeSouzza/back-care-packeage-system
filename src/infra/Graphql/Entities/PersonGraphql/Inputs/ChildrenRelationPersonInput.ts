@@ -25,8 +25,8 @@ export class CreateChildrenRelationPersonInput
 export class UpdateChildrenRelationPersonInput
   implements UpdateChildrenRelationPersonDto
 {
-  @Field()
-  id: string;
+  @Field({ nullable: true })
+  id?: string;
   @Field({ nullable: true })
   gender?: string;
   @Field({ nullable: true })

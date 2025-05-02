@@ -19,11 +19,11 @@ import { CreatePersonUseCase } from 'src/app/UseCases/PersonUseCases/CreatePerso
 import { GetAllPersonUseCase } from 'src/app/UseCases/PersonUseCases/GetAllPersonUseCase';
 import { GetPersonUseCase } from 'src/app/UseCases/PersonUseCases/GetPersonUse';
 import { UpdatePersonUseCase } from 'src/app/UseCases/PersonUseCases/UpdatePersonUseCase';
-import { GetAllCarePacakageItemInput } from '../CarePackageItemGraphql/Inputs/GetAllCarePackageItemInput';
 import { GetPersonInput } from './Inputs/GetPersonInput';
 import { CountPersonInput } from './Inputs/CountPersonInput';
 import { GetAllChildUseCase } from 'src/app/UseCases/ChildUseCase/GetAllChildrenUseCase';
 import { ChildModel } from '../ChildGraphql/ChildModel';
+import { GetAllPersonInput } from './Inputs/GetAllPersonInput';
 
 @UseGuards(GraphQlAuthGuard)
 @Resolver(() => PersonModel)
@@ -42,7 +42,7 @@ export class PersonResolver {
   }
   @Query(() => [PersonModel])
   async getAllPersons(
-    @Args() request: GetAllCarePacakageItemInput,
+    @Args() request: GetAllPersonInput,
   ): Promise<PersonModel[]> {
     return await this.getAllPersonUseCase.execute(request);
   }

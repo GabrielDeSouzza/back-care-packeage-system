@@ -39,6 +39,7 @@ export class PersonMapper {
             birthdayDate: child.birthdayDate,
             lastName: child.lastName,
             name: child.name,
+            gender: child.gender,
             updatedAt: new Date(),
             updatedBy: data.updatedBy,
             id: crypto.randomUUID(),
@@ -58,28 +59,33 @@ export class PersonMapper {
       gender: data?.gender,
       hasChild: data?.hasChild,
       lastName: data?.lastName,
-      Child: data?.children && {
-        upsert: {
+      Child: {
+        upsert: data?.children?.map((child) => ({
+          where: {
+            id: child.id ?? '',
+          },
           create: {
+            birthdayDate: child.birthdayDate,
             createdAt: new Date(),
-            createdBy: data.updatedBy,
-            birthdayDate: data.children[0].birthdayDate,
-            lastName: data.children[0].lastName,
-            name: data.children[0].name,
+            gender: child.gender,
+            lastName: child.lastName,
+            name: child.name,
             updatedAt: new Date(),
+            createdBy: data.updatedBy,
             updatedBy: data.updatedBy,
-            id: crypto.randomUUID(),
           },
           update: {
-            birthdayDate: data.children[0].birthdayDate,
-            lastName: data.children[0].lastName,
-            name: data.children[0].name,
+            birthdayDate: child.birthdayDate,
+            gender: child.gender,
+            lastName: child.lastName,
+            name: child.name,
+            updatedAt: new Date(),
+            updatedBy: data.updatedBy,
           },
-          where: {
-            id: data.children[0].id,
-          },
-        },
-        disconnect: data.deletedChildrenIds?.map((id) => ({ id })),
+        })),
+        delete: data?.deletedChildrenIds?.map((childId) => ({
+          id: childId,
+        })),
       },
     };
     return updated;

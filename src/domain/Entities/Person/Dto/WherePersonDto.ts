@@ -7,7 +7,7 @@ import { WhereDTO } from 'src/domain/Dtos/WhereDtos/WhereDto';
 export abstract class WherePersonDTO extends WhereDTO {
   name?: StringFilterDTO;
   lastName?: StringFilterDTO;
-  document?: NumberFilterDTO;
+  document?: StringFilterDTO;
   hasChild?: BoolFilterDTO;
   birthdayDate?: DateTimeFilterDTO;
   gender?: StringFilterDTO;

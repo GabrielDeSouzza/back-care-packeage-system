@@ -15,5 +15,5 @@ export abstract class GetPersonInput implements GetPersonDto {
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  document?: number;
+  document?: string;
 }

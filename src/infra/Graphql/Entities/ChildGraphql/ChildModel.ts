@@ -12,6 +12,8 @@ export class ChildModel implements ChildEntityProps {
   @Field()
   lastName: string;
 
+  @Field()
+  gender: string;
   @Field(() => Date)
   birthdayDate: Date;
 

@@ -14,7 +14,7 @@ export class PersonModel implements PersonEntityProps {
   lastName: string;
 
   @Field()
-  document: number;
+  document: string;
 
   @Field()
   hasChild: boolean;
@@ -38,5 +38,5 @@ export class PersonModel implements PersonEntityProps {
   updatedBy: string;
 
   @Field(() => [ChildModel], { nullable: true })
-  child?: [ChildModel] | null;
+  Children?: [ChildModel] | null;
 }

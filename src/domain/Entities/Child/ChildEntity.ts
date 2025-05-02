@@ -5,6 +5,7 @@ export abstract class ChildEntityProps {
   name: string;
   lastName: string;
   birthdayDate: Date;
+  gender: string;
   createdBy: string;
   updatedBy: string;
   createdAt: Date;
@@ -92,5 +93,12 @@ export class ChildEntity {
 
   public set responsibleId(value: string) {
     this.props.responsibleId = value;
+  }
+  public get gender(): string {
+    return this.props.gender;
+  }
+
+  public set gender(value: string) {
+    this.props.gender = value;
   }
 }

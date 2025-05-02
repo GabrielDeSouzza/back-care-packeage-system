@@ -50,6 +50,7 @@ type ChildModel {
   id: ID!
   name: String!
   lastName: String!
+  gender: String!
   birthdayDate: DateTime!
   responsibleId: ID!
   createdAt: DateTime!
@@ -62,7 +63,7 @@ type PersonModel {
   id: ID!
   name: String!
   lastName: String!
-  document: Float!
+  document: String!
   hasChild: Boolean!
   birthdayDate: DateTime!
   gender: String!
@@ -70,8 +71,7 @@ type PersonModel {
   updatedAt: DateTime!
   createdBy: String!
   updatedBy: String!
-  child: [ChildModel!]
-  Children: [ChildModel!]!
+  Children: [ChildModel!]
 }
 
 type Query {
@@ -86,7 +86,7 @@ type Query {
   getAllTypeCarePackages(where: TypeCarePackageWhereInput, sort: TypeCarePackageOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [TypeCarePackageModel!]!
   getTypeCarePackage(request: GetTypeCarePackageInput!): TypeCarePackageModel!
   countPersons(where: PersonWhereInput): Int!
-  getAllPersons(where: CarePackageItemWhereInput, sort: CarePackageItemOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [PersonModel!]!
+  getAllPersons(where: PersonWhereInput, sort: PersonOrderByWithRelationInput, limit: Int! = 25, offset: Int! = 0): [PersonModel!]!
   getPerson(request: GetPersonInput!): PersonModel!
 }
 
@@ -200,7 +200,7 @@ input PersonWhereInput {
   id: StringFilter
   name: StringFilter
   lastName: StringFilter
-  document: IntFilter
+  document: StringFilter
   hasChild: BoolFilter
   birthdayDate: DateTimeFilter
   gender: StringFilter
@@ -212,28 +212,6 @@ input PersonWhereInput {
   UpdatedBy: UserScalarRelationFilter
   Child: ChildListRelationFilter
   CarePackage: CarePackageListRelationFilter
-}
-
-input IntFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: NestedIntFilter
-}
-
-input NestedIntFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: NestedIntFilter
 }
 
 input BoolFilter {
@@ -260,6 +238,7 @@ input ChildWhereInput {
   name: StringFilter
   lastName: StringFilter
   birthdayDate: DateTimeFilter
+  gender: StringFilter
   createdBy: StringFilter
   updatedBy: StringFilter
   createdAt: DateTimeFilter
@@ -299,6 +278,28 @@ input CarePackageWhereInput {
   CarePackageSchedule: CarePackageScheduleScalarRelationFilter
   CreatedBy: UserScalarRelationFilter
   UpdatedBy: UserScalarRelationFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input NestedIntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
 }
 
 input TypeCarePackageScalarRelationFilter {
@@ -439,9 +440,27 @@ input GetTypeCarePackageInput {
   name: String
 }
 
+input PersonOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  lastName: SortOrder
+  document: SortOrder
+  hasChild: SortOrder
+  birthdayDate: SortOrder
+  gender: SortOrder
+  createdBy: SortOrder
+  updatedBy: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  CreatedBy: UserOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  Child: ChildOrderByRelationAggregateInput
+  CarePackage: CarePackageOrderByRelationAggregateInput
+}
+
 input GetPersonInput {
   id: ID
-  document: Float
+  document: String
 }
 
 type Mutation {
@@ -499,7 +518,7 @@ input UpdateTypeCarePackageInput {
 input CreatePersonInput {
   name: String!
   lastName: String!
-  document: Float!
+  document: String!
   hasChild: Boolean!
   birthdayDate: DateTime!
   gender: String!
@@ -514,11 +533,10 @@ input CreateChildrenRelationPersonInput {
 }
 
 input UpdatePersonInput {
-  id: ID!
   name: String
   lastName: String
-  newDocument: Float
-  oldDocument: Float
+  newDocument: String
+  oldDocument: String
   hasChild: Boolean
   birthdayDate: DateTime
   gender: String
@@ -527,7 +545,7 @@ input UpdatePersonInput {
 }
 
 input UpdateChildrenRelationPersonInput {
-  id: String!
+  id: String
   gender: String
   name: String
   lastName: String

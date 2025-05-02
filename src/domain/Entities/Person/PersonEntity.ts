@@ -4,7 +4,7 @@ export abstract class PersonEntityProps {
   id?: string;
   name: string;
   lastName: string;
-  document: number;
+  document: string;
   hasChild: boolean;
   birthdayDate: Date;
   gender: string;
@@ -48,11 +48,11 @@ export class PersonEntity {
     this.props.lastName = value;
   }
 
-  public get document(): number {
+  public get document(): string {
     return this.props.document;
   }
 
-  public set document(value: number) {
+  public set document(value: string) {
     this.props.document = value;
   }
 

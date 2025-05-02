@@ -22,7 +22,7 @@ export class UpdatePersonUseCase {
     const updatedItem = await this.personRepository.updatePerson(data);
     return updatedItem;
   }
-  private async isDocumentInUse(document: number): Promise<void> {
+  private async isDocumentInUse(document: string): Promise<void> {
     const item = await this.personRepository.getPerson({
       document,
     });

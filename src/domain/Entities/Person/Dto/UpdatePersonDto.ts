@@ -7,8 +7,8 @@ export abstract class UpdatePersonDto
 {
   name?: string;
   lastName?: string;
-  newDocument?: number;
-  oldDocument?: number;
+  newDocument?: string;
+  oldDocument?: string;
   hasChild?: boolean;
   birthdayDate?: Date;
   children?: UpdateChildrenRelationPersonDto[];
@@ -26,7 +26,7 @@ export abstract class UpdateChildrenRelationPersonDto
       >
     >
 {
-  id: string;
+  id?: string;
   gender?: string;
   name?: string;
   lastName?: string;

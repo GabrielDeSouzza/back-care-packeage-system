@@ -5,9 +5,7 @@ import { PersonOrderByWithRelationInput } from 'src/infra/Graphql/generated/pers
 import { PersonWhereInput } from 'src/infra/Graphql/generated/person/person-where.input';
 
 @ArgsType()
-export abstract class GetAllCarePacakageItemInput
-  implements WherePersonRequestDTO
-{
+export abstract class GetAllPersonInput implements WherePersonRequestDTO {
   @Field(() => PersonWhereInput, { nullable: true })
   where?: PersonWhereInput;
   @Field(() => PersonOrderByWithRelationInput, { nullable: true })

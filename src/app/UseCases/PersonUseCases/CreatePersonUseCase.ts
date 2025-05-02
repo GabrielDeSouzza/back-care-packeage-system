@@ -12,7 +12,7 @@ export class CreatePersonUseCase {
 
     return this.personRepository.createPerson(data);
   }
-  private async verifyDocumentInUse(document: number): Promise<void> {
+  private async verifyDocumentInUse(document: string): Promise<void> {
     const documentInUse = await this.personRepository.getPerson({
       document,
     });

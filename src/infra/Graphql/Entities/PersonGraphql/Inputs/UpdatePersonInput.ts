@@ -1,13 +1,12 @@
-import { Field, InputType, ID, HideField } from '@nestjs/graphql';
+import { Field, InputType, HideField } from '@nestjs/graphql';
 import {
   IsBoolean,
-  IsDateString,
+  IsDate,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
-  Min,
+  MinLength,
 } from 'class-validator';
 import {
   UpdateChildrenRelationPersonDto,
@@ -17,32 +16,27 @@ import { UpdateChildrenRelationPersonInput } from './ChildrenRelationPersonInput
 
 @InputType()
 export abstract class UpdatePersonInput implements UpdatePersonDto {
-  @Field(() => ID)
-  @IsUUID('all', { message: 'ID inválido' })
-  @IsNotEmpty({ message: 'É necessário fornecer o ID para atualizar' })
-  id: string;
-
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  @Min(3, { message: 'O nome deve ter pelo menos 3 caracteres' })
+  @MinLength(3, { message: 'O nome deve ter pelo menos 3 caracteres' })
   name?: string;
 
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  @Min(3, { message: 'O sobrenome  deve ter pelo menos 3 caracteres' })
+  @MinLength(3, { message: 'O sobrenome  deve ter pelo menos 3 caracteres' })
   lastName?: string;
 
   @Field({ nullable: true })
-  @IsNumber()
+  @IsString()
   @IsOptional()
-  newDocument?: number;
+  newDocument?: string;
 
   @Field({ nullable: true })
-  @IsNumber()
+  @IsString()
   @IsNotEmpty({ message: 'O documento é obrigatório' })
-  oldDocument: number;
+  oldDocument: string;
 
   @Field({ nullable: true })
   @IsBoolean()
@@ -50,7 +44,7 @@ export abstract class UpdatePersonInput implements UpdatePersonDto {
   hasChild?: boolean;
 
   @Field({ nullable: true })
-  @IsDateString({}, { message: 'Data de nascimento inválida' })
+  @IsDate({ message: 'Data de nascimento inválida' })
   @IsOptional()
   birthdayDate?: Date;
 
