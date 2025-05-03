@@ -9,8 +9,7 @@ export abstract class UpdateCarePackageDto
       >
     >
 {
-  id: string;
-  numberControl?: number;
+  numberControl: number;
   typeCarePackageId?: string;
   personId?: string;
   carePackageScheduleId?: string;

@@ -36,13 +36,13 @@ describe('CreatePersonUseCase', () => {
   });
 
   it('should throw an error if the name is already in use', async () => {
-    const existingItem = { document: 123456789 } as PersonEntity;
+    const existingItem = { document: '123456789' } as PersonEntity;
     personRepositoryMock.getPerson.mockResolvedValue(existingItem);
 
     const itemDto: CreatePersonDto = {
       name: 'testName',
       birthdayDate: new Date(),
-      document: 123456789,
+      document: '123456789',
       gender: 'M',
       hasChild: true,
       lastName: 'lastName',
@@ -67,7 +67,7 @@ describe('CreatePersonUseCase', () => {
     const itemDto: CreatePersonDto = {
       name: 'testName',
       birthdayDate: new Date(),
-      document: 123456789,
+      document: '123456789',
       gender: 'M',
       hasChild: true,
       lastName: 'lastName',
@@ -92,7 +92,7 @@ describe('CreatePersonUseCase', () => {
     expect(result).toEqual({
       name: 'testName',
       birthdayDate: new Date(),
-      document: 123456789,
+      document: '123456789',
       gender: 'M',
       hasChild: true,
       lastName: 'lastName',

@@ -34,11 +34,11 @@ describe('UpdatePersonUseCase', () => {
   });
   it('should throw ConflictException if document already in use', async () => {
     const data: UpdatePersonDto = {
-      newDocument: 123456789,
-      oldDocument: 987654321,
+      newDocument: '123456789',
+      oldDocument: '987654321',
       updatedBy: 'userId',
     };
-    const existingItem = { id: '1', document: 987654321 };
+    const existingItem = { id: '1', document: '987654321' };
     personRepositoryMock.getPerson.mockResolvedValue(
       existingItem as PersonEntity,
     );
@@ -47,7 +47,7 @@ describe('UpdatePersonUseCase', () => {
       .mockResolvedValueOnce(existingItem as PersonEntity)
       .mockResolvedValueOnce({
         id: '2',
-        document: 123456789,
+        document: '123456789',
       } as PersonEntity);
 
     await expect(updatePersonUseCase.execute(data)).rejects.toThrow(
@@ -58,32 +58,32 @@ describe('UpdatePersonUseCase', () => {
     personRepositoryMock.getPerson.mockResolvedValue(null);
     await expect(
       updatePersonUseCase.execute({
-        newDocument: 123456789,
-        oldDocument: 987654321,
+        newDocument: '123456789',
+        oldDocument: '987654321',
         updatedBy: 'userId',
       } as UpdatePersonDto),
     ).rejects.toThrow(new NotFoundException('Pessoa não encontrada'));
   });
   it('should successfully update a care package item', async () => {
     const data: UpdatePersonDto = {
-      newDocument: 123456789,
-      oldDocument: 987654321,
+      newDocument: '123456789',
+      oldDocument: '987654321',
       updatedBy: 'userId',
     };
-    const existingItem = { id: '1', document: 987654321 };
+    const existingItem = { id: '1', document: '987654321' };
     personRepositoryMock.getPerson
       .mockResolvedValueOnce(existingItem as PersonEntity)
       .mockResolvedValueOnce(null);
     personRepositoryMock.updatePerson.mockResolvedValue({
       id: '1',
-      document: 123456789,
+      document: '123456789',
       updatedBy: 'userId',
     } as PersonEntity);
     const result = await updatePersonUseCase.execute(data);
 
     expect(result).toEqual({
       id: '1',
-      document: 123456789,
+      document: '123456789',
       updatedBy: 'userId',
     } as PersonEntity);
   });

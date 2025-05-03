@@ -34,7 +34,7 @@ describe('GetPersonUseCase', () => {
     expect(getPersonUseCase).toBeDefined();
   });
   it('should return a person by ID', async () => {
-    const mockItem = { id: '1', document: 123456789 };
+    const mockItem = { id: '1', document: '123456789' };
     personRepositoryMock.getPerson.mockResolvedValue(mockItem as PersonEntity);
 
     const result = await getPersonUseCase.execute({ id: '1' });
@@ -45,14 +45,14 @@ describe('GetPersonUseCase', () => {
     });
   });
   it('should return a person by document', async () => {
-    const mockItem = { id: '1', document: 123456789 };
+    const mockItem = { id: '1', document: '123456789' };
     personRepositoryMock.getPerson.mockResolvedValue(mockItem as PersonEntity);
 
-    const result = await getPersonUseCase.execute({ document: 123456789 });
+    const result = await getPersonUseCase.execute({ document: '123456789' });
 
     expect(result).toEqual(mockItem);
     expect(personRepositoryMock.getPerson).toHaveBeenCalledWith({
-      document: 123456789,
+      document: '123456789',
     });
   });
   it('should throw NotFoundException if item not found', async () => {
